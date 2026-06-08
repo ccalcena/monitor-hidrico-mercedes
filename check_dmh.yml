@@ -1,0 +1,129 @@
+name: Check Diario — Niveles DMH-DINAC
+
+on:
+  schedule:
+    # Todos los días a las 7:00 AM hora Paraguay (UTC-4 → 11:00 UTC)
+    - cron: '0 11 * * *'
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  check-and-update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependencias Python
+        run: pip install requests beautifulsoup4 lxml pyshp pyproj
+
+      - name: Instalar Playwright y Chromium
+        run: |
+          pip install playwright
+          playwright install chromium
+          playwright install-deps chromium
+
+      - name: Verificar shapefiles
+        run: |
+          echo "📐 Verificando shapefiles en data/..."
+          python3 << 'PYEOF'
+          import shapefile, sys, os
+          from pyproj import Transformer
+
+          shapefiles = {
+              "PLANO_PROYECTO": "data/PLANO_PROYECTO.shp",
+              "CHA_fase_I":     "data/CHA_fase_I.shp",
+              "parque_caballero": "data/parque_caballero.shp",
+          }
+          transformer = Transformer.from_crs('EPSG:32721', 'EPSG:4326', always_xy=True)
+          ok = True
+          for name, path in shapefiles.items():
+              if not os.path.exists(path):
+                  print(f"  ❌ {name}: no encontrado en {path}")
+                  ok = False
+                  continue
+              shp = shapefile.Reader(path)
+              total_pts = sum(len(sr.shape.points) for sr in shp.shapeRecords())
+              print(f"  ✅ {name}: {len(shp)} forma(s), {total_pts} puntos totales")
+          if not ok:
+              print("  ⚠️  Algunos shapefiles faltan — el mapa usará fallbacks")
+          PYEOF
+
+      - name: Verificar acceso a DMH-DINAC
+        run: |
+          echo "🌐 Verificando acceso a DMH-DINAC..."
+          python3 << 'PYEOF'
+          import requests, os
+          url = "https://www.meteorologia.gov.py/nivel-rio/indexconvencional.php"
+          headers = {"User-Agent": "Mozilla/5.0"}
+          try:
+              r = requests.get(url, headers=headers, timeout=15)
+              status = r.status_code
+              size   = len(r.text)
+          except Exception as e:
+              status = f"ERROR: {e}"
+              size   = 0
+          print(f"  HTTP status: {status}")
+          print(f"  Response size: {size} chars")
+          if status == 200 and size > 1000:
+              print("  ✅ DMH-DINAC accesible via requests")
+          else:
+              print("  ⚠️  DMH-DINAC no responde via requests — se usará Playwright")
+          with open(os.environ["GITHUB_ENV"], "a") as f:
+              f.write(f"DMH_HTTP_STATUS={status}\n")
+          PYEOF
+
+      - name: Fetchear datos y generar dashboard
+        id: fetch
+        run: |
+          echo "🚀 Ejecutando fetch_dmh.py..."
+          python scripts/fetch_dmh.py 2>&1 | tee /tmp/fetch_log.txt
+          echo "--- Log completo ---"
+          cat /tmp/fetch_log.txt
+
+          # Extraer nivel de alerta del log para el commit message
+          ALERTA=$(python3 -c "
+          import re, sys
+          log = open('/tmp/fetch_log.txt').read()
+          m = re.search(r'nivel.*?:\s*(ROJO|ALERTA|VIGILANCIA|NORMAL|verde|naranja|amarillo|rojo)', log, re.I)
+          print(m.group(1).upper() if m else 'ACTUALIZADO')
+          ")
+          echo "ALERTA_NIVEL=$ALERTA" >> $GITHUB_ENV
+          echo "Nivel detectado: $ALERTA"
+
+      - name: Verificar dashboard generado
+        run: |
+          echo "🔍 Verificando docs/index.html..."
+          if [ ! -f "docs/index.html" ]; then
+            echo "❌ docs/index.html no fue generado"
+            exit 1
+          fi
+          SIZE=$(wc -c < docs/index.html)
+          echo "  Tamaño: $SIZE bytes"
+          grep -q "proyCoords"     docs/index.html && echo "  ✅ PLANO_PROYECTO presente"    || echo "  ⚠️  PLANO_PROYECTO no encontrado"
+          grep -q "chaCoords"      docs/index.html && echo "  ✅ CHA Fase I presente"        || echo "  ⚠️  CHA Fase I no encontrado"
+          grep -q "parqueCoords"   docs/index.html && echo "  ✅ Parque Caballero presente"  || echo "  ⚠️  Parque Caballero no encontrado"
+          grep -q "Última actualización" docs/index.html && echo "  ✅ Timestamp presente"   || echo "  ⚠️  Timestamp no encontrado"
+
+      - name: Commit y publicar en GitHub Pages
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add docs/index.html
+          if git diff --staged --quiet; then
+            echo "ℹ️  Sin cambios en el dashboard"
+          else
+            git commit -m "🌊 [${{ env.ALERTA_NIVEL }}] Dashboard actualizado $(date +'%d-%m-%Y %H:%M UTC')"
+            git push
+            echo "✅ Dashboard publicado en GitHub Pages"
+          fi
