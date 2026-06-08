@@ -35,9 +35,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);f
 .semaforo-right .status-big{font-size:15px;font-weight:800;color:#2e7d32;margin-bottom:10px;}
 .semaforo-scale{display:flex;gap:6px;flex-wrap:wrap;}
 .scale-item{font-size:10px;padding:3px 8px;border-radius:2px;}
-.alertas-box{background:#e8f5e9;border:1px solid #2e7d32;border-left:4px solid #2e7d32;border-radius:4px;padding:14px 18px;margin-bottom:14px;}
-.alertas-box h4{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:#1b5e20;margin-bottom:9px;}
-.alerta-item{font-size:12px;color:var(--ink);margin-bottom:7px;line-height:1.5;padding-left:10px;border-left:2px solid #2e7d32;}
+.alertas-box{background:#fff0f0;border:1px solid #c62828;border-left:4px solid #c62828;border-radius:4px;padding:14px 18px;margin-bottom:14px;}
+.alertas-box h4{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:#7f1d1d;margin-bottom:9px;}
+.alerta-item{font-size:12px;color:var(--ink);margin-bottom:7px;line-height:1.5;padding-left:10px;border-left:2px solid #c62828;}
 .card{background:white;border:1px solid var(--border);border-radius:4px;margin-bottom:14px;overflow:hidden;}
 .card-hdr{padding:11px 18px;display:flex;align-items:center;gap:9px;border-bottom:1px solid var(--border);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.6px;}
 .num{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:white;flex-shrink:0;}
@@ -91,16 +91,16 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);f
     <div class="hdr-badge">🔄 Auto-actualizado</div>
   </div>
   <div class="hdr-meta">
-    <div class="hdr-mi"><div class="label">Última actualización</div><div class="val">08 de June de 2026 — 10:56 hs (hora Paraguay)</div></div>
+    <div class="hdr-mi"><div class="label">Última actualización</div><div class="val">08 de junio de 2026 — 07:00 hs (hora Paraguay)</div></div>
     <div class="hdr-mi"><div class="label">Fuente</div><div class="val">DMH – DINAC</div></div>
-    <div class="hdr-mi"><div class="label">Asunción hoy</div><div class="val">2.81 m -3 cm ↓</div></div>
-    <div class="hdr-mi"><div class="label">Nivel de alerta</div><div class="val">VERDE</div></div>
+    <div class="hdr-mi"><div class="label">Asunción hoy</div><div class="val">2.95 m -2 cm ↓</div></div>
+    <div class="hdr-mi"><div class="label">Nivel de alerta</div><div class="val">ROJO</div></div>
   </div>
 </div>
 
 <div class="semaforo">
   <div class="semaforo-left">
-    <div class="nivel">2.81 m</div>
+    <div class="nivel">2.95 m</div>
     <div class="etiqueta">Río Paraguay · Asunción</div>
   </div>
   <div class="semaforo-right">
@@ -118,8 +118,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);f
 
 
 <div class="alertas-box">
-  <h4>📋 Evaluación del día — 08 de June de 2026 — 10:56 hs (hora Paraguay)</h4>
-  <div class='alerta-item'>📍 <strong>Asunción hoy: 2.81 m</strong> — ✅ DRENAJE LIBRE — SIN ALERTA.</div>
+  <h4>📋 Evaluación del día — 08 de junio de 2026 — 07:00 hs (hora Paraguay)</h4>
+  <div class='alerta-item'>🔴 <strong>Bahía Negra sigue subiendo</strong> (4.14 m, +2 cm hoy). La onda aún no se ha liberado hacia el sur.</div>
+<div class='alerta-item'>⚡ <strong>Vallemi girando a positivo</strong> (3.33 m, +3 cm) — frente de onda en tránsito. Asunción responderá en 5–8 días.</div>
+<div class='alerta-item'>📍 <strong>Asunción hoy: 2.95 m</strong> — ✅ DRENAJE LIBRE — SIN ALERTA.</div>
 
 </div>
 
@@ -128,12 +130,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);f
   <div class="card-body">
     <div class="wv">
       <div class="wv-title">🔁 Estado actual — nivel relativo al máximo histórico de cada estación</div>
-      <div class="wb"><div class="wl">Bahía Negra</div><div class="wt"><div class="wf" style="width:59%;background:#c62828;">4.15 m</div></div><div class="wv-val" style="color:#c62828;">-2 cm</div></div>
-<div class="wb"><div class="wl">Fuerte Olimpo</div><div class="wt"><div class="wf" style="width:44%;background:#d84315;">4.30 m</div></div><div class="wv-val" style="color:#d84315;">+2 cm</div></div>
-<div class="wb"><div class="wl">Isla Margarita</div><div class="wt"><div class="wf" style="width:44%;background:#f57f17;">3.44 m</div></div><div class="wv-val" style="color:#f57f17;">-1 cm</div></div>
-<div class="wb"><div class="wl">Vallemi ⚡</div><div class="wt"><div class="wf" style="width:27%;background:#f9a825;">2.37 m</div></div><div class="wv-val" style="color:#f9a825;">-91 cm</div></div>
-<div class="wb"><div class="wl">Concepción</div><div class="wt"><div class="wf" style="width:32%;background:#66bb6a;">2.82 m</div></div><div class="wv-val" style="color:#66bb6a;">-3 cm</div></div>
-<div class="wb"><div class="wl">Asunción ⭐</div><div class="wt"><div class="wf" style="width:31%;background:#2e7d32;">2.81 m</div></div><div class="wv-val" style="color:#2e7d32;">-3 cm</div></div>
+      <div class="wb"><div class="wl">Bahía Negra</div><div class="wt"><div class="wf" style="width:59%;background:#c62828;">4.14 m</div></div><div class="wv-val" style="color:#c62828;">+2 cm</div></div>
+<div class="wb"><div class="wl">Fuerte Olimpo</div><div class="wt"><div class="wf" style="width:44%;background:#d84315;">4.25 m</div></div><div class="wv-val" style="color:#d84315;">estable</div></div>
+<div class="wb"><div class="wl">Isla Margarita</div><div class="wt"><div class="wf" style="width:44%;background:#f57f17;">3.44 m</div></div><div class="wv-val" style="color:#f57f17;">estable</div></div>
+<div class="wb"><div class="wl">Vallemi ⚡</div><div class="wt"><div class="wf" style="width:38%;background:#f9a825;">3.33 m</div></div><div class="wv-val" style="color:#f9a825;">+3 cm</div></div>
+<div class="wb"><div class="wl">Concepción</div><div class="wt"><div class="wf" style="width:33%;background:#66bb6a;">2.91 m</div></div><div class="wv-val" style="color:#66bb6a;">-1 cm</div></div>
+<div class="wb"><div class="wl">Asunción ⭐</div><div class="wt"><div class="wf" style="width:32%;background:#2e7d32;">2.95 m</div></div><div class="wv-val" style="color:#2e7d32;">-2 cm</div></div>
 
       <div class="wv-note">⬇ Dirección de flujo sur. ⚡ Vallemi = señal de avance 5–8 días antes de Asunción. ⭐ = referencia directa del proyecto.</div>
     </div>
@@ -145,19 +147,19 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);f
   <div class="card-body">
     <table class="tbl">
       <thead><tr><th>Localidad</th><th>Nivel actual</th><th>Var. diaria</th><th>Máx. histórico</th><th>% del máx.</th><th>Estado</th></tr></thead>
-      <tbody><tr class=""><td>Bahía Negra</td><td class="mono"><strong>4.15 m</strong></td><td style="color:#2e7d32;font-weight:700">-2 cm ↓</td><td class="mono">6.95 m</td><td>59.7%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
-<tr class=""><td>Fuerte Olimpo</td><td class="mono"><strong>4.30 m</strong></td><td style="color:#c62828;font-weight:700">+2 cm ↑</td><td class="mono">9.60 m</td><td>44.8%</td><td><span class="bdg b-r">SUBIENDO</span></td></tr>
-<tr class=""><td>Isla Margarita</td><td class="mono"><strong>3.44 m</strong></td><td style="color:#888;font-weight:700">-1 cm</td><td class="mono">7.70 m</td><td>44.7%</td><td><span class="bdg b-a">ESTABLE</span></td></tr>
-<tr class=""><td>⚡ Vallemi</td><td class="mono"><strong>2.37 m</strong></td><td style="color:#2e7d32;font-weight:700">-91 cm ↓</td><td class="mono">8.56 m</td><td>27.7%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
-<tr class=""><td>Concepción</td><td class="mono"><strong>2.82 m</strong></td><td style="color:#2e7d32;font-weight:700">-3 cm ↓</td><td class="mono">8.66 m</td><td>32.6%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
-<tr class=""><td>Rosario</td><td class="mono"><strong>2.80 m</strong></td><td style="color:#888;font-weight:700">+0 cm</td><td class="mono">8.03 m</td><td>34.9%</td><td><span class="bdg b-a">ESTABLE</span></td></tr>
-<tr class=""><td>Puerto Antequera</td><td class="mono"><strong>2.62 m</strong></td><td style="color:#888;font-weight:700">-1 cm</td><td class="mono">6.02 m</td><td>43.5%</td><td><span class="bdg b-a">ESTABLE</span></td></tr>
-<tr class=""><td>Villeta</td><td class="mono"><strong>3.28 m</strong></td><td style="color:#2e7d32;font-weight:700">-4 cm ↓</td><td class="mono">8.94 m</td><td>36.7%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
-<tr class="ref"><td>⭐ Asunción</td><td class="mono"><strong>2.81 m</strong></td><td style="color:#2e7d32;font-weight:700">-3 cm ↓</td><td class="mono">9.01 m</td><td>31.2%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
-<tr class=""><td>Ita Enramada</td><td class="mono"><strong>3.28 m</strong></td><td style="color:#2e7d32;font-weight:700">-4 cm ↓</td><td class="mono">5.80 m</td><td>56.6%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
-<tr class=""><td>Humaitá</td><td class="mono"><strong>3.00 m</strong></td><td style="color:#2e7d32;font-weight:700">-4 cm ↓</td><td class="mono">7.74 m</td><td>38.8%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
-<tr class=""><td>Alberdi</td><td class="mono"><strong>4.62 m</strong></td><td style="color:#2e7d32;font-weight:700">-6 cm ↓</td><td class="mono">10.14 m</td><td>45.6%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
-<tr class=""><td>Pilar</td><td class="mono"><strong>4.21 m</strong></td><td style="color:#2e7d32;font-weight:700">-4 cm ↓</td><td class="mono">10.05 m</td><td>41.9%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
+      <tbody><tr class="hi"><td>Bahía Negra</td><td class="mono"><strong>4.14 m</strong></td><td style="color:#c62828;font-weight:700">+2 cm ↑</td><td class="mono">6.95 m</td><td>59.6%</td><td><span class="bdg b-r">SUBIENDO</span></td></tr>
+<tr class=""><td>Fuerte Olimpo</td><td class="mono"><strong>4.25 m</strong></td><td style="color:#888;font-weight:700">+0 cm</td><td class="mono">9.60 m</td><td>44.3%</td><td><span class="bdg b-a">ESTABLE</span></td></tr>
+<tr class=""><td>Isla Margarita</td><td class="mono"><strong>3.44 m</strong></td><td style="color:#888;font-weight:700">+0 cm</td><td class="mono">7.70 m</td><td>44.7%</td><td><span class="bdg b-a">ESTABLE</span></td></tr>
+<tr class="warn"><td>⚡ Vallemi</td><td class="mono"><strong>3.33 m</strong></td><td style="color:#c62828;font-weight:700">+3 cm ↑</td><td class="mono">8.56 m</td><td>38.9%</td><td><span class="bdg b-r">SUBIENDO</span></td></tr>
+<tr class=""><td>Concepción</td><td class="mono"><strong>2.91 m</strong></td><td style="color:#888;font-weight:700">-1 cm</td><td class="mono">8.66 m</td><td>33.6%</td><td><span class="bdg b-a">ESTABLE</span></td></tr>
+<tr class=""><td>Rosario</td><td class="mono"><strong>2.85 m</strong></td><td style="color:#2e7d32;font-weight:700">-3 cm ↓</td><td class="mono">8.03 m</td><td>35.5%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
+<tr class=""><td>Puerto Antequera</td><td class="mono"><strong>2.68 m</strong></td><td style="color:#2e7d32;font-weight:700">-2 cm ↓</td><td class="mono">6.02 m</td><td>44.5%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
+<tr class=""><td>Villeta</td><td class="mono"><strong>3.43 m</strong></td><td style="color:#2e7d32;font-weight:700">-2 cm ↓</td><td class="mono">8.94 m</td><td>38.4%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
+<tr class="ref"><td>⭐ Asunción</td><td class="mono"><strong>2.95 m</strong></td><td style="color:#2e7d32;font-weight:700">-2 cm ↓</td><td class="mono">9.01 m</td><td>32.7%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
+<tr class=""><td>Ita Enramada</td><td class="mono"><strong>3.43 m</strong></td><td style="color:#2e7d32;font-weight:700">-3 cm ↓</td><td class="mono">5.80 m</td><td>59.1%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
+<tr class=""><td>Humaitá</td><td class="mono"><strong>2.90 m</strong></td><td style="color:#2e7d32;font-weight:700">-14 cm ↓</td><td class="mono">7.74 m</td><td>37.5%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
+<tr class=""><td>Alberdi</td><td class="mono"><strong>4.81 m</strong></td><td style="color:#2e7d32;font-weight:700">-3 cm ↓</td><td class="mono">10.14 m</td><td>47.4%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
+<tr class=""><td>Pilar</td><td class="mono"><strong>4.31 m</strong></td><td style="color:#2e7d32;font-weight:700">-5 cm ↓</td><td class="mono">10.05 m</td><td>42.9%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
 </tbody>
     </table>
     <div style="font-size:9.5px;color:#888;margin-top:8px;">⭐ referencia directa del proyecto &nbsp;|&nbsp; ⚡ señal de alerta temprana</div>
@@ -223,19 +225,19 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
 }).addTo(map);
 
 var stationData = [
-  { name:"Bahía Negra", lat:-20.22, lng:-58.16, nivel:"4.15 m", tend:"-2 cm", key:false },
-  { name:"Fuerte Olimpo", lat:-21.04, lng:-57.87, nivel:"4.30 m", tend:"+2 cm", key:false },
-  { name:"Isla Margarita", lat:-21.95, lng:-57.94, nivel:"3.44 m", tend:"-1 cm", key:false },
-  { name:"Vallemi", lat:-22.54, lng:-57.97, nivel:"2.37 m", tend:"-91 cm", key:true },
-  { name:"Concepción", lat:-23.41, lng:-57.43, nivel:"2.82 m", tend:"-3 cm", key:false },
-  { name:"Rosario", lat:-24.45, lng:-57.22, nivel:"2.80 m", tend:"estable", key:false },
-  { name:"Puerto Antequera", lat:-24.08, lng:-57.07, nivel:"2.62 m", tend:"-1 cm", key:false },
-  { name:"Villeta", lat:-25.51, lng:-57.56, nivel:"3.28 m", tend:"-4 cm", key:false },
-  { name:"Asunción", lat:-25.28, lng:-57.63, nivel:"2.81 m", tend:"-3 cm", key:true },
-  { name:"Ita Enramada", lat:-25.43, lng:-57.6, nivel:"3.28 m", tend:"-4 cm", key:false },
-  { name:"Humaitá", lat:-27.06, lng:-58.52, nivel:"3.00 m", tend:"-4 cm", key:false },
-  { name:"Alberdi", lat:-26.18, lng:-58.13, nivel:"4.62 m", tend:"-6 cm", key:false },
-  { name:"Pilar", lat:-26.86, lng:-58.3, nivel:"4.21 m", tend:"-4 cm", key:false }
+  { name:"Bahía Negra", lat:-20.22, lng:-58.16, nivel:"4.14 m", tend:"+2 cm", key:false },
+  { name:"Fuerte Olimpo", lat:-21.04, lng:-57.87, nivel:"4.25 m", tend:"estable", key:false },
+  { name:"Isla Margarita", lat:-21.95, lng:-57.94, nivel:"3.44 m", tend:"estable", key:false },
+  { name:"Vallemi", lat:-22.54, lng:-57.97, nivel:"3.33 m", tend:"+3 cm", key:true },
+  { name:"Concepción", lat:-23.41, lng:-57.43, nivel:"2.91 m", tend:"-1 cm", key:false },
+  { name:"Rosario", lat:-24.45, lng:-57.22, nivel:"2.85 m", tend:"-3 cm", key:false },
+  { name:"Puerto Antequera", lat:-24.08, lng:-57.07, nivel:"2.68 m", tend:"-2 cm", key:false },
+  { name:"Villeta", lat:-25.51, lng:-57.56, nivel:"3.43 m", tend:"-2 cm", key:false },
+  { name:"Asunción", lat:-25.28, lng:-57.63, nivel:"2.95 m", tend:"-2 cm", key:true },
+  { name:"Ita Enramada", lat:-25.43, lng:-57.6, nivel:"3.43 m", tend:"-3 cm", key:false },
+  { name:"Humaitá", lat:-27.06, lng:-58.52, nivel:"2.90 m", tend:"-14 cm", key:false },
+  { name:"Alberdi", lat:-26.18, lng:-58.13, nivel:"4.81 m", tend:"-3 cm", key:false },
+  { name:"Pilar", lat:-26.86, lng:-58.3, nivel:"4.31 m", tend:"-5 cm", key:false }
 ];
 var blueIcon = L.divIcon({className:'',html:'<div style="width:10px;height:10px;background:#1565c0;border:2px solid white;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,.4);"></div>',iconSize:[10,10],iconAnchor:[5,5]});
 var redIcon  = L.divIcon({className:'',html:'<div style="width:14px;height:14px;background:#c62828;border:2px solid white;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,.5);"></div>',iconSize:[14,14],iconAnchor:[7,7]});
@@ -258,7 +260,7 @@ L.polygon([[-25.2738000,-57.6141000],[-25.2739879,-57.6135111],[-25.2742305,-57.
 map.fitBounds(proyPolygon.getBounds().pad(0.5));
 
 // ── CHA Fase I ──────────────────────────────────────────────────────
-var chaCoords = [[[-25.2829429, -57.6307776], [-25.2826681, -57.6312561], [-25.2826766, -57.6312972], [-25.2827124, -57.6313221], [-25.2826454, -57.6314388], [-25.2826105, -57.6314129], [-25.2825743, -57.6314226], [-25.2821864, -57.632095], [-25.2821948, -57.6321361], [-25.2822143, -57.6321496], [-25.2821434, -57.632273], [-25.2821235, -57.6322592], [-25.2820862, -57.6322685], [-25.2817031, -57.6329356], [-25.281721, -57.6330228], [-25.2817065, -57.633048], [-25.2817007, -57.6330439], [-25.2816476, -57.6331363], [-25.2816278, -57.6331225], [-25.2815904, -57.6331318], [-25.2812962, -57.633644], [-25.2813047, -57.6336851], [-25.2813245, -57.6336989], [-25.2812594, -57.6338122], [-25.2812395, -57.6337984], [-25.2812022, -57.6338077], [-25.2809297, -57.6342822], [-25.2809381, -57.6343233], [-25.280958, -57.6343371], [-25.2808912, -57.6344532], [-25.2808757, -57.634442], [-25.2808385, -57.6344511], [-25.2807268, -57.6346456], [-25.2807302, -57.6346728], [-25.2806444, -57.6347773], [-25.2806271, -57.6347601], [-25.2805894, -57.6347615], [-25.2800376, -57.635385], [-25.2800381, -57.6354272], [-25.2800572, -57.6354476], [-25.2799749, -57.635541], [-25.279956, -57.635521], [-25.2799198, -57.6355208], [-25.2799108, -57.6355307], [-25.2791155, -57.6364347], [-25.2791205, -57.6364806], [-25.2791405, -57.6364945], [-25.2790753, -57.6366089], [-25.2790253, -57.6365734], [-25.2789915, -57.636578], [-25.2783643, -57.6372908], [-25.2783694, -57.6373368], [-25.2783973, -57.6373562], [-25.2783322, -57.6374694], [-25.2782734, -57.6374285], [-25.2782394, -57.637433], [-25.2777748, -57.6379619], [-25.2777798, -57.6380078], [-25.277786, -57.6380121], [-25.2777233, -57.6381212], [-25.2776855, -57.638095], [-25.2776494, -57.6381022], [-25.2772751, -57.6386469], [-25.2772822, -57.63869], [-25.2773073, -57.6387075], [-25.2772495, -57.6388082], [-25.2772147, -57.6387842], [-25.2771785, -57.6387939], [-25.2771448, -57.638851], [-25.2767835, -57.6394799], [-25.2767588, -57.639523], [-25.276716, -57.6395975], [-25.2767244, -57.6397835], [-25.2769201, -57.6399976], [-25.2768207, -57.6401086], [-25.2769857, -57.6402318], [-25.276928, -57.6403691], [-25.2768532, -57.6403024], [-25.2767879, -57.6403166], [-25.2766866, -57.6407197], [-25.2767099, -57.6407663], [-25.2768723, -57.6408803], [-25.2768145, -57.6410185], [-25.2767589, -57.6409831], [-25.2767225, -57.6409929], [-25.2767412, -57.6417852], [-25.2768123, -57.6418544], [-25.2767937, -57.6420839], [-25.2766368, -57.6420979], [-25.2766238, -57.6421824], [-25.2765117, -57.6421611], [-25.2764574, -57.6413134], [-25.2764521, -57.6406528], [-25.2764132, -57.6404069], [-25.2764525, -57.6399527], [-25.2765201, -57.639588], [-25.2765109, -57.6395247], [-25.2764424, -57.6393696], [-25.2761399, -57.6389071], [-25.2762689, -57.6388533], [-25.2765776, -57.6393965], [-25.2766412, -57.6394234], [-25.2766701, -57.639417], [-25.2767616, -57.6391493], [-25.2770046, -57.6386662], [-25.2769896, -57.6386241], [-25.2769554, -57.6386107], [-25.2769612, -57.6385919], [-25.2767526, -57.6385139], [-25.2767897, -57.6384493], [-25.2768532, -57.6379538], [-25.277027, -57.6376513], [-25.2774676, -57.6379606], [-25.2775493, -57.6378183], [-25.2776245, -57.6378705], [-25.2776584, -57.637866], [-25.2780817, -57.6373796], [-25.2780879, -57.6373288], [-25.2780609, -57.6373088], [-25.2781337, -57.6371701], [-25.2782147, -57.6372301], [-25.2782515, -57.6372275], [-25.2788801, -57.6365129], [-25.2788751, -57.636467], [-25.2788478, -57.636448], [-25.2789128, -57.6363349], [-25.2789707, -57.6363752], [-25.2790046, -57.6363707], [-25.2798867, -57.635368], [-25.279886, -57.6353259], [-25.2793166, -57.634723], [-25.2792783, -57.6347238], [-25.2791763, -57.6348397], [-25.2790651, -57.6347212], [-25.2790771, -57.6346995], [-25.2790604, -57.6346551], [-25.2790143, -57.6346426], [-25.2790236, -57.6345992], [-25.2790456, -57.634605], [-25.2790604, -57.6345362], [-25.27882, -57.6344734], [-25.279231, -57.6339976], [-25.2795692, -57.6335818], [-25.2797659, -57.6338097], [-25.2800478, -57.6335322], [-25.2798844, -57.6333322], [-25.2803766, -57.6327928], [-25.2804195, -57.6327126], [-25.2805598, -57.6324532], [-25.2807253, -57.6325682], [-25.2807275, -57.6325696], [-25.2807296, -57.63257], [-25.2807323, -57.6325688], [-25.2807345, -57.6325653], [-25.2808178, -57.6324203], [-25.2810612, -57.6325868], [-25.2810474, -57.6326085], [-25.2811962, -57.632712], [-25.2812083, -57.6327082], [-25.2814262, -57.6323288], [-25.2814335, -57.6323347], [-25.281441, -57.6323426], [-25.2814451, -57.6323481], [-25.2814483, -57.6323532], [-25.2814515, -57.6323594], [-25.2814562, -57.632372], [-25.2814581, -57.6323806], [-25.2814594, -57.6323902], [-25.2814594, -57.6324002], [-25.281458, -57.63241], [-25.2814558, -57.6324193], [-25.2814539, -57.6324251], [-25.2814515, -57.6324306], [-25.2814474, -57.6324386], [-25.2812343, -57.6328097], [-25.2812315, -57.632816], [-25.2812299, -57.6328262], [-25.2812313, -57.6328354], [-25.2812353, -57.6328437], [-25.28124, -57.6328491], [-25.2812461, -57.6328537], [-25.2812959, -57.6328885], [-25.281327, -57.6328805], [-25.2814542, -57.6329689], [-25.2814613, -57.6330031], [-25.2814932, -57.6330253], [-25.2814995, -57.6330295], [-25.281506, -57.633032], [-25.2815115, -57.6330327], [-25.281518, -57.6330318], [-25.2815232, -57.6330298], [-25.2815286, -57.6330261], [-25.2815329, -57.6330213], [-25.2815366, -57.6330153], [-25.2817698, -57.6326092], [-25.2817707, -57.6325834], [-25.2818612, -57.6324258], [-25.281882, -57.6324138], [-25.2820063, -57.6321975], [-25.2820077, -57.6321947], [-25.2820085, -57.6321931], [-25.2820117, -57.6321845], [-25.2820138, -57.6321741], [-25.2820143, -57.6321646], [-25.2820132, -57.6321541], [-25.2820108, -57.632145], [-25.2820078, -57.6321378], [-25.2820052, -57.6321331], [-25.282001, -57.6321269], [-25.2819967, -57.6321222], [-25.2819917, -57.6321177], [-25.2819647, -57.6320988], [-25.2820102, -57.6320196], [-25.2820423, -57.6320419], [-25.2820796, -57.6320326], [-25.2824712, -57.6313507], [-25.2824628, -57.6313096], [-25.2824307, -57.6312873], [-25.2824982, -57.6311698], [-25.2825318, -57.6311931], [-25.2825692, -57.6311838], [-25.2828458, -57.6307022], [-25.2828373, -57.6306611], [-25.2828037, -57.6306378], [-25.2828676, -57.6305265], [-25.2828997, -57.6305488], [-25.2829371, -57.6305395], [-25.2832303, -57.630029], [-25.2832218, -57.6299879], [-25.2831897, -57.6299655], [-25.2832529, -57.6298556], [-25.283285, -57.6298779], [-25.2833224, -57.6298686], [-25.2836834, -57.6292399], [-25.2836749, -57.6291989], [-25.2836018, -57.6291481], [-25.2836507, -57.6290608], [-25.2837605, -57.6291377], [-25.2837892, -57.6290717], [-25.2838192, -57.6285186], [-25.2838964, -57.6285056], [-25.2838717, -57.6287799], [-25.2839507, -57.6287741], [-25.284604, -57.6275648], [-25.284697, -57.6276255], [-25.284302, -57.6284045], [-25.2843104, -57.6284456], [-25.2846498, -57.6286814], [-25.2846871, -57.6286721], [-25.2847127, -57.6286198], [-25.284828, -57.6287004], [-25.2847989, -57.6287509], [-25.2848073, -57.628792], [-25.2853483, -57.6291678], [-25.2853856, -57.6291585], [-25.2854181, -57.6290982], [-25.2855124, -57.6291651], [-25.2854818, -57.6292254], [-25.2854903, -57.6292665], [-25.2858833, -57.6295395], [-25.2859207, -57.6295303], [-25.285947, -57.6294799], [-25.2860562, -57.6295488], [-25.2860249, -57.6296027], [-25.2860334, -57.6296438], [-25.2860906, -57.6296835], [-25.2860274, -57.6297936], [-25.2859725, -57.6297554], [-25.2859351, -57.6297646], [-25.2855844, -57.6303753], [-25.2855929, -57.6304164], [-25.2856478, -57.6304546], [-25.2855842, -57.6305654], [-25.2855292, -57.6305272], [-25.2854918, -57.6305365], [-25.2851459, -57.631139], [-25.2851543, -57.6311801], [-25.2852092, -57.6312189], [-25.2851476, -57.6313257], [-25.2850894, -57.6312854], [-25.2850521, -57.6312946], [-25.2847623, -57.6317997], [-25.2847597, -57.6318057], [-25.2847583, -57.6318115], [-25.2847578, -57.6318156], [-25.2847578, -57.6318213], [-25.2847584, -57.6318266], [-25.2847594, -57.6318309], [-25.2847621, -57.6318378], [-25.2847644, -57.631842], [-25.2847688, -57.6318476], [-25.284775, -57.6318529], [-25.2848249, -57.6318875], [-25.2847622, -57.6319967], [-25.2847086, -57.6319596], [-25.2847027, -57.6319571], [-25.2846929, -57.6319555], [-25.2846835, -57.6319568], [-25.2846761, -57.6319599], [-25.2846705, -57.6319638], [-25.2846663, -57.6319679], [-25.2846631, -57.6319723], [-25.2846302, -57.6320295], [-25.284547, -57.6319717], [-25.2845753, -57.6319223], [-25.2845803, -57.6319133], [-25.2845825, -57.6319076], [-25.2845841, -57.6318993], [-25.2845842, -57.6318914], [-25.284583, -57.6318844], [-25.2845807, -57.6318776], [-25.2845766, -57.6318703], [-25.2845672, -57.6318612], [-25.2841835, -57.6315947], [-25.2841798, -57.6315927], [-25.2841721, -57.6315902], [-25.2841629, -57.6315898], [-25.2841546, -57.6315915], [-25.2841441, -57.6315975], [-25.2841388, -57.6316028], [-25.2841351, -57.6316082], [-25.2841034, -57.6316635], [-25.2839927, -57.6315866], [-25.2840252, -57.6315299], [-25.2840266, -57.6315264], [-25.2840278, -57.6315208], [-25.2840278, -57.6315151], [-25.284027, -57.6315108], [-25.2840245, -57.6315046], [-25.2840197, -57.6314986], [-25.2839671, -57.6314619], [-25.2834359, -57.631107], [-25.283403, -57.6311628], [-25.2832998, -57.6310866], [-25.2833294, -57.6310358], [-25.2829429, -57.6307776]], [[-25.2840442, -57.6313275], [-25.2840869, -57.6313572], [-25.2840982, -57.6313645], [-25.284102, -57.6313658], [-25.2841081, -57.6313663], [-25.2841139, -57.6313651], [-25.2841199, -57.6313616], [-25.2841244, -57.6313569], [-25.2841278, -57.6313512], [-25.2844151, -57.630851], [-25.2844067, -57.6308098], [-25.2838432, -57.6304157], [-25.2835187, -57.6309665], [-25.2840442, -57.6313275]], [[-25.2834125, -57.6308935], [-25.2837189, -57.6303684], [-25.2837105, -57.6303273], [-25.2833688, -57.63009], [-25.2833314, -57.6300992], [-25.2830382, -57.6306098], [-25.2830274, -57.6306289], [-25.2834125, -57.6308935]], [[-25.2846361, -57.6317376], [-25.2846415, -57.6317396], [-25.2846487, -57.6317394], [-25.2846546, -57.6317366], [-25.2846593, -57.6317316], [-25.2849523, -57.6312216], [-25.2849439, -57.6311805], [-25.2845517, -57.630908], [-25.2845143, -57.6309173], [-25.2842257, -57.6314198], [-25.2842208, -57.6314312], [-25.284221, -57.6314405], [-25.2842264, -57.6314519], [-25.2846361, -57.6317376]]];
+var chaCoords = [];
 chaCoords.forEach(function(ring) {
   L.polygon(ring, {
     color:'#9c27b0', weight:2, opacity:1,
@@ -268,7 +270,7 @@ chaCoords.forEach(function(ring) {
 });
 
 // ── Parque Caballero ─────────────────────────────────────────────────
-var parqueCoords = [[[-25.280119, -57.6220553], [-25.2800375, -57.6219771], [-25.2799704, -57.6218867], [-25.2799068, -57.6217462], [-25.2798893, -57.6214798], [-25.2799465, -57.6212588], [-25.2800232, -57.6210593], [-25.2799834, -57.6210057], [-25.2800086, -57.6209651], [-25.2800588, -57.6208674], [-25.2800744, -57.6207897], [-25.2800062, -57.6207093], [-25.2799805, -57.6206362], [-25.2799599, -57.6205546], [-25.2798564, -57.6201252], [-25.279915, -57.6199642], [-25.2799244, -57.6198696], [-25.2799693, -57.619515], [-25.2799584, -57.6194428], [-25.279859, -57.6192418], [-25.2797114, -57.6192086], [-25.2794998, -57.619161], [-25.2795132, -57.6190042], [-25.2795845, -57.618859], [-25.2794848, -57.6187201], [-25.2794754, -57.6185602], [-25.2794652, -57.6183601], [-25.2795952, -57.6182945], [-25.2797373, -57.618212], [-25.2799852, -57.6180804], [-25.2800886, -57.6180072], [-25.2799989, -57.6178511], [-25.2799765, -57.6177786], [-25.2799988, -57.6177543], [-25.2800633, -57.6177246], [-25.2802087, -57.6176069], [-25.2802299, -57.6175526], [-25.2802785, -57.6174875], [-25.2803059, -57.6174359], [-25.2802938, -57.6173786], [-25.2803187, -57.6173379], [-25.2803609, -57.6173218], [-25.2804079, -57.617322], [-25.2804511, -57.6173165], [-25.280501, -57.617306], [-25.2805219, -57.6172994], [-25.2805818, -57.6172493], [-25.2806193, -57.617218], [-25.2806977, -57.6172976], [-25.2807764, -57.6174083], [-25.2810017, -57.6177117], [-25.2811545, -57.6178745], [-25.2814353, -57.618219], [-25.2816915, -57.6185239], [-25.2820605, -57.6190949], [-25.2822291, -57.6193177], [-25.2822673, -57.6193682], [-25.2823745, -57.6194617], [-25.2826119, -57.6196911], [-25.2827905, -57.6199635], [-25.2828636, -57.6200569], [-25.2829184, -57.6201974], [-25.2829774, -57.6203578], [-25.2830527, -57.6205731], [-25.2831527, -57.620842], [-25.2831993, -57.6209703], [-25.2832916, -57.6214418], [-25.2833399, -57.621814], [-25.2833452, -57.6218705], [-25.2832385, -57.6218821], [-25.2831178, -57.6218922], [-25.2830127, -57.6219091], [-25.2829755, -57.6219244], [-25.2829368, -57.6219242], [-25.2828677, -57.6219664], [-25.2828575, -57.6219923], [-25.2828019, -57.6220049], [-25.2827464, -57.6220213], [-25.2827228, -57.6220397], [-25.2826984, -57.6220432], [-25.2826348, -57.622045], [-25.2826071, -57.6220436], [-25.2826097, -57.6220878], [-25.2825846, -57.6221166], [-25.2825347, -57.6221118], [-25.2825, -57.622133], [-25.2824154, -57.6221371], [-25.2823447, -57.6221337], [-25.2822907, -57.6221304], [-25.2822561, -57.6221211], [-25.2822201, -57.622098], [-25.2821897, -57.6220872], [-25.2819969, -57.6221019], [-25.2819207, -57.6222401], [-25.2818553, -57.6222065], [-25.2818047, -57.6222284], [-25.2817639, -57.6223558], [-25.2816884, -57.6223133], [-25.2813926, -57.6221167], [-25.2813373, -57.6220783], [-25.2812968, -57.6221543], [-25.2811729, -57.622271], [-25.2810644, -57.6223574], [-25.2809612, -57.6225215], [-25.2806212, -57.6226128], [-25.2805171, -57.6226442], [-25.2804506, -57.622621], [-25.2803761, -57.6225383], [-25.2803118, -57.6223505], [-25.2802666, -57.6222222], [-25.280119, -57.6220553]]];
+var parqueCoords = [];
 parqueCoords.forEach(function(ring) {
   L.polygon(ring, {
     color:'#00897b', weight:2, opacity:1,
