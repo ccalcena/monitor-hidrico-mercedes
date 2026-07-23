@@ -35,9 +35,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);f
 .semaforo-right .status-big{font-size:15px;font-weight:800;color:#2e7d32;margin-bottom:10px;}
 .semaforo-scale{display:flex;gap:6px;flex-wrap:wrap;}
 .scale-item{font-size:10px;padding:3px 8px;border-radius:2px;}
-.alertas-box{background:#e8f5e9;border:1px solid #2e7d32;border-left:4px solid #2e7d32;border-radius:4px;padding:14px 18px;margin-bottom:14px;}
-.alertas-box h4{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:#1b5e20;margin-bottom:9px;}
-.alerta-item{font-size:12px;color:var(--ink);margin-bottom:7px;line-height:1.5;padding-left:10px;border-left:2px solid #2e7d32;}
+.alertas-box{background:#fff0f0;border:1px solid #c62828;border-left:4px solid #c62828;border-radius:4px;padding:14px 18px;margin-bottom:14px;}
+.alertas-box h4{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:#7f1d1d;margin-bottom:9px;}
+.alerta-item{font-size:12px;color:var(--ink);margin-bottom:7px;line-height:1.5;padding-left:10px;border-left:2px solid #c62828;}
 .card{background:white;border:1px solid var(--border);border-radius:4px;margin-bottom:14px;overflow:hidden;}
 .card-hdr{padding:11px 18px;display:flex;align-items:center;gap:9px;border-bottom:1px solid var(--border);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.6px;}
 .num{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:white;flex-shrink:0;}
@@ -91,16 +91,16 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);f
     <div class="hdr-badge">🔄 Auto-actualizado</div>
   </div>
   <div class="hdr-meta">
-    <div class="hdr-mi"><div class="label">Última actualización</div><div class="val">23 de July de 2026 — 08:23 hs (hora Paraguay)</div></div>
+    <div class="hdr-mi"><div class="label">Última actualización</div><div class="val">23 de July de 2026 — 15:11 hs (hora Paraguay)</div></div>
     <div class="hdr-mi"><div class="label">Fuente</div><div class="val">DMH – DINAC</div></div>
-    <div class="hdr-mi"><div class="label">Asunción hoy</div><div class="val">1.85 m -1 cm ↓</div></div>
-    <div class="hdr-mi"><div class="label">Nivel de alerta</div><div class="val">VERDE</div></div>
+    <div class="hdr-mi"><div class="label">Asunción hoy</div><div class="val">1.84 m -1 cm ↓</div></div>
+    <div class="hdr-mi"><div class="label">Nivel de alerta</div><div class="val">ROJO</div></div>
   </div>
 </div>
 
 <div class="semaforo">
   <div class="semaforo-left">
-    <div class="nivel">1.85 m</div>
+    <div class="nivel">1.84 m</div>
     <div class="etiqueta">Río Paraguay · Asunción</div>
   </div>
   <div class="semaforo-right">
@@ -118,8 +118,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);f
 
 
 <div class="alertas-box">
-  <h4>📋 Evaluación del día — 23 de July de 2026 — 08:23 hs (hora Paraguay)</h4>
-  <div class='alerta-item'>📍 <strong>Asunción hoy: 1.85 m</strong> — ✅ DRENAJE LIBRE — SIN ALERTA.</div>
+  <h4>📋 Evaluación del día — 23 de July de 2026 — 15:11 hs (hora Paraguay)</h4>
+  <div class='alerta-item'>🟠 <strong>Concepción subiendo</strong> (2.33 m, +1 cm) — onda a 2–3 días de Asunción.</div>
+<div class='alerta-item'>📍 <strong>Asunción hoy: 1.84 m</strong> — ✅ DRENAJE LIBRE — SIN ALERTA.</div>
 
 </div>
 
@@ -128,12 +129,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);f
   <div class="card-body">
     <div class="wv">
       <div class="wv-title">🔁 Estado actual — nivel relativo al máximo histórico de cada estación</div>
-      <div class="wb"><div class="wl">Bahía Negra</div><div class="wt"><div class="wf" style="width:59%;background:#c62828;">4.16 m</div></div><div class="wv-val" style="color:#c62828;">estable</div></div>
-<div class="wb"><div class="wl">Fuerte Olimpo</div><div class="wt"><div class="wf" style="width:43%;background:#d84315;">4.16 m</div></div><div class="wv-val" style="color:#d84315;">estable</div></div>
-<div class="wb"><div class="wl">Isla Margarita</div><div class="wt"><div class="wf" style="width:42%;background:#f57f17;">3.26 m</div></div><div class="wv-val" style="color:#f57f17;">+1 cm</div></div>
-<div class="wb"><div class="wl">Vallemi ⚡</div><div class="wt"><div class="wf" style="width:35%;background:#f9a825;">3.07 m</div></div><div class="wv-val" style="color:#f9a825;">estable</div></div>
-<div class="wb"><div class="wl">Concepción</div><div class="wt"><div class="wf" style="width:26%;background:#66bb6a;">2.32 m</div></div><div class="wv-val" style="color:#66bb6a;">-2 cm</div></div>
-<div class="wb"><div class="wl">Asunción ⭐</div><div class="wt"><div class="wf" style="width:20%;background:#2e7d32;">1.85 m</div></div><div class="wv-val" style="color:#2e7d32;">-1 cm</div></div>
+      <div class="wb"><div class="wl">Bahía Negra</div><div class="wt"><div class="wf" style="width:59%;background:#c62828;">4.15 m</div></div><div class="wv-val" style="color:#c62828;">-1 cm</div></div>
+<div class="wb"><div class="wl">Fuerte Olimpo</div><div class="wt"><div class="wf" style="width:43%;background:#d84315;">4.18 m</div></div><div class="wv-val" style="color:#d84315;">+2 cm</div></div>
+<div class="wb"><div class="wl">Isla Margarita</div><div class="wt"><div class="wf" style="width:42%;background:#f57f17;">3.24 m</div></div><div class="wv-val" style="color:#f57f17;">-2 cm</div></div>
+<div class="wb"><div class="wl">Vallemi ⚡</div><div class="wt"><div class="wf" style="width:35%;background:#f9a825;">3.06 m</div></div><div class="wv-val" style="color:#f9a825;">-1 cm</div></div>
+<div class="wb"><div class="wl">Concepción</div><div class="wt"><div class="wf" style="width:26%;background:#66bb6a;">2.33 m</div></div><div class="wv-val" style="color:#66bb6a;">+1 cm</div></div>
+<div class="wb"><div class="wl">Asunción ⭐</div><div class="wt"><div class="wf" style="width:20%;background:#2e7d32;">1.84 m</div></div><div class="wv-val" style="color:#2e7d32;">-1 cm</div></div>
 
       <div class="wv-note">⬇ Dirección de flujo sur. ⚡ Vallemi = señal de avance 5–8 días antes de Asunción. ⭐ = referencia directa del proyecto.</div>
     </div>
@@ -145,19 +146,19 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);f
   <div class="card-body">
     <table class="tbl">
       <thead><tr><th>Localidad</th><th>Nivel actual</th><th>Var. diaria</th><th>Máx. histórico</th><th>% del máx.</th><th>Estado</th></tr></thead>
-      <tbody><tr class=""><td>Bahía Negra</td><td class="mono"><strong>4.16 m</strong></td><td style="color:#888;font-weight:700">+0 cm</td><td class="mono">6.95 m</td><td>59.9%</td><td><span class="bdg b-a">ESTABLE</span></td></tr>
-<tr class=""><td>Fuerte Olimpo</td><td class="mono"><strong>4.16 m</strong></td><td style="color:#888;font-weight:700">+0 cm</td><td class="mono">9.60 m</td><td>43.3%</td><td><span class="bdg b-a">ESTABLE</span></td></tr>
-<tr class=""><td>Isla Margarita</td><td class="mono"><strong>3.26 m</strong></td><td style="color:#888;font-weight:700">+1 cm</td><td class="mono">7.70 m</td><td>42.3%</td><td><span class="bdg b-a">ESTABLE</span></td></tr>
-<tr class=""><td>⚡ Vallemi</td><td class="mono"><strong>3.07 m</strong></td><td style="color:#888;font-weight:700">+0 cm</td><td class="mono">8.56 m</td><td>35.9%</td><td><span class="bdg b-a">ESTABLE</span></td></tr>
-<tr class=""><td>Concepción</td><td class="mono"><strong>2.32 m</strong></td><td style="color:#2e7d32;font-weight:700">-2 cm ↓</td><td class="mono">8.66 m</td><td>26.8%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
-<tr class=""><td>Rosario</td><td class="mono"><strong>1.99 m</strong></td><td style="color:#888;font-weight:700">-1 cm</td><td class="mono">8.03 m</td><td>24.8%</td><td><span class="bdg b-a">ESTABLE</span></td></tr>
+      <tbody><tr class=""><td>Bahía Negra</td><td class="mono"><strong>4.15 m</strong></td><td style="color:#888;font-weight:700">-1 cm</td><td class="mono">6.95 m</td><td>59.7%</td><td><span class="bdg b-a">ESTABLE</span></td></tr>
+<tr class=""><td>Fuerte Olimpo</td><td class="mono"><strong>4.18 m</strong></td><td style="color:#c62828;font-weight:700">+2 cm ↑</td><td class="mono">9.60 m</td><td>43.5%</td><td><span class="bdg b-r">SUBIENDO</span></td></tr>
+<tr class=""><td>Isla Margarita</td><td class="mono"><strong>3.24 m</strong></td><td style="color:#2e7d32;font-weight:700">-2 cm ↓</td><td class="mono">7.70 m</td><td>42.1%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
+<tr class=""><td>⚡ Vallemi</td><td class="mono"><strong>3.06 m</strong></td><td style="color:#888;font-weight:700">-1 cm</td><td class="mono">8.56 m</td><td>35.7%</td><td><span class="bdg b-a">ESTABLE</span></td></tr>
+<tr class=""><td>Concepción</td><td class="mono"><strong>2.33 m</strong></td><td style="color:#888;font-weight:700">+1 cm</td><td class="mono">8.66 m</td><td>26.9%</td><td><span class="bdg b-a">ESTABLE</span></td></tr>
+<tr class=""><td>Rosario</td><td class="mono"><strong>1.99 m</strong></td><td style="color:#888;font-weight:700">+0 cm</td><td class="mono">8.03 m</td><td>24.8%</td><td><span class="bdg b-a">ESTABLE</span></td></tr>
 <tr class=""><td>Puerto Antequera</td><td class="mono"><strong>2.00 m</strong></td><td style="color:#2e7d32;font-weight:700">-5 cm ↓</td><td class="mono">6.02 m</td><td>33.2%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
-<tr class=""><td>Villeta</td><td class="mono"><strong>2.34 m</strong></td><td style="color:#888;font-weight:700">-1 cm</td><td class="mono">8.94 m</td><td>26.2%</td><td><span class="bdg b-a">ESTABLE</span></td></tr>
-<tr class="ref"><td>⭐ Asunción</td><td class="mono"><strong>1.85 m</strong></td><td style="color:#888;font-weight:700">-1 cm</td><td class="mono">9.01 m</td><td>20.5%</td><td><span class="bdg b-a">ESTABLE</span></td></tr>
-<tr class=""><td>Ita Enramada</td><td class="mono"><strong>2.34 m</strong></td><td style="color:#2e7d32;font-weight:700">-4 cm ↓</td><td class="mono">5.80 m</td><td>40.3%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
-<tr class=""><td>Humaitá</td><td class="mono"><strong>3.28 m</strong></td><td style="color:#2e7d32;font-weight:700">-4 cm ↓</td><td class="mono">7.74 m</td><td>42.4%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
-<tr class=""><td>Alberdi</td><td class="mono"><strong>4.09 m</strong></td><td style="color:#2e7d32;font-weight:700">-5 cm ↓</td><td class="mono">10.14 m</td><td>40.3%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
-<tr class=""><td>Pilar</td><td class="mono"><strong>4.13 m</strong></td><td style="color:#2e7d32;font-weight:700">-4 cm ↓</td><td class="mono">10.05 m</td><td>41.1%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
+<tr class=""><td>Villeta</td><td class="mono"><strong>2.33 m</strong></td><td style="color:#888;font-weight:700">-1 cm</td><td class="mono">8.94 m</td><td>26.1%</td><td><span class="bdg b-a">ESTABLE</span></td></tr>
+<tr class="ref"><td>⭐ Asunción</td><td class="mono"><strong>1.84 m</strong></td><td style="color:#888;font-weight:700">-1 cm</td><td class="mono">9.01 m</td><td>20.4%</td><td><span class="bdg b-a">ESTABLE</span></td></tr>
+<tr class=""><td>Ita Enramada</td><td class="mono"><strong>2.34 m</strong></td><td style="color:#888;font-weight:700">+0 cm</td><td class="mono">5.80 m</td><td>40.3%</td><td><span class="bdg b-a">ESTABLE</span></td></tr>
+<tr class=""><td>Humaitá</td><td class="mono"><strong>3.30 m</strong></td><td style="color:#c62828;font-weight:700">+2 cm ↑</td><td class="mono">7.74 m</td><td>42.6%</td><td><span class="bdg b-r">SUBIENDO</span></td></tr>
+<tr class=""><td>Alberdi</td><td class="mono"><strong>4.04 m</strong></td><td style="color:#2e7d32;font-weight:700">-5 cm ↓</td><td class="mono">10.14 m</td><td>39.8%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
+<tr class=""><td>Pilar</td><td class="mono"><strong>4.11 m</strong></td><td style="color:#2e7d32;font-weight:700">-2 cm ↓</td><td class="mono">10.05 m</td><td>40.9%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
 </tbody>
     </table>
     <div style="font-size:9.5px;color:#888;margin-top:8px;">⭐ referencia directa del proyecto &nbsp;|&nbsp; ⚡ señal de alerta temprana</div>
@@ -223,19 +224,19 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
 }).addTo(map);
 
 var stationData = [
-  { name:"Bahía Negra", lat:-20.22, lng:-58.16, nivel:"4.16 m", tend:"estable", key:false },
-  { name:"Fuerte Olimpo", lat:-21.04, lng:-57.87, nivel:"4.16 m", tend:"estable", key:false },
-  { name:"Isla Margarita", lat:-21.95, lng:-57.94, nivel:"3.26 m", tend:"+1 cm", key:false },
-  { name:"Vallemi", lat:-22.54, lng:-57.97, nivel:"3.07 m", tend:"estable", key:true },
-  { name:"Concepción", lat:-23.41, lng:-57.43, nivel:"2.32 m", tend:"-2 cm", key:false },
-  { name:"Rosario", lat:-24.45, lng:-57.22, nivel:"1.99 m", tend:"-1 cm", key:false },
+  { name:"Bahía Negra", lat:-20.22, lng:-58.16, nivel:"4.15 m", tend:"-1 cm", key:false },
+  { name:"Fuerte Olimpo", lat:-21.04, lng:-57.87, nivel:"4.18 m", tend:"+2 cm", key:false },
+  { name:"Isla Margarita", lat:-21.95, lng:-57.94, nivel:"3.24 m", tend:"-2 cm", key:false },
+  { name:"Vallemi", lat:-22.54, lng:-57.97, nivel:"3.06 m", tend:"-1 cm", key:true },
+  { name:"Concepción", lat:-23.41, lng:-57.43, nivel:"2.33 m", tend:"+1 cm", key:false },
+  { name:"Rosario", lat:-24.45, lng:-57.22, nivel:"1.99 m", tend:"estable", key:false },
   { name:"Puerto Antequera", lat:-24.08, lng:-57.07, nivel:"2.00 m", tend:"-5 cm", key:false },
-  { name:"Villeta", lat:-25.51, lng:-57.56, nivel:"2.34 m", tend:"-1 cm", key:false },
-  { name:"Asunción", lat:-25.28, lng:-57.63, nivel:"1.85 m", tend:"-1 cm", key:true },
-  { name:"Ita Enramada", lat:-25.43, lng:-57.6, nivel:"2.34 m", tend:"-4 cm", key:false },
-  { name:"Humaitá", lat:-27.06, lng:-58.52, nivel:"3.28 m", tend:"-4 cm", key:false },
-  { name:"Alberdi", lat:-26.18, lng:-58.13, nivel:"4.09 m", tend:"-5 cm", key:false },
-  { name:"Pilar", lat:-26.86, lng:-58.3, nivel:"4.13 m", tend:"-4 cm", key:false }
+  { name:"Villeta", lat:-25.51, lng:-57.56, nivel:"2.33 m", tend:"-1 cm", key:false },
+  { name:"Asunción", lat:-25.28, lng:-57.63, nivel:"1.84 m", tend:"-1 cm", key:true },
+  { name:"Ita Enramada", lat:-25.43, lng:-57.6, nivel:"2.34 m", tend:"estable", key:false },
+  { name:"Humaitá", lat:-27.06, lng:-58.52, nivel:"3.30 m", tend:"+2 cm", key:false },
+  { name:"Alberdi", lat:-26.18, lng:-58.13, nivel:"4.04 m", tend:"-5 cm", key:false },
+  { name:"Pilar", lat:-26.86, lng:-58.3, nivel:"4.11 m", tend:"-2 cm", key:false }
 ];
 var blueIcon = L.divIcon({className:'',html:'<div style="width:10px;height:10px;background:#1565c0;border:2px solid white;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,.4);"></div>',iconSize:[10,10],iconAnchor:[5,5]});
 var redIcon  = L.divIcon({className:'',html:'<div style="width:14px;height:14px;background:#c62828;border:2px solid white;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,.5);"></div>',iconSize:[14,14],iconAnchor:[7,7]});
