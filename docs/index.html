@@ -4,85 +4,103 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Monitor Hídrico — Resiliencia Urbana Franja Costera Asunción</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
 <style>
 :root {
-  --ink:#0d1b2a;--paper:#f4f1eb;--blue-deep:#0a2f5c;--blue:#1565c0;
-  --blue-light:#e3eeff;--red:#c62828;--red-light:#fff0f0;--orange:#d84315;
-  --orange-light:#fff3e0;--green:#1b5e20;--green-light:#e8f5e9;
-  --amber:#b45309;--amber-light:#fffbeb;--grey:#64748b;--border:#d6d0c4;
+  --ink:#0b1a2b;--paper:#f3f6f6;--navy:#0a1f3d;--navy-2:#123258;--navy-deep:#071628;
+  --emerald:#0f5c46;--emerald-2:#0f7a5c;--emerald-light:#e6f6f0;
+  --blue-light:#e8f0fb;--red:#c62828;--red-light:#fff0f0;--orange:#d84315;
+  --orange-light:#fff3e0;--green:#0a3d2e;--green-light:#e6f6f0;
+  --amber:#b45309;--amber-light:#fffbeb;--grey:#5b6b76;--border:#e0e6e6;
+  --shadow:0 1px 2px rgba(10,31,61,.04),0 8px 24px rgba(10,31,61,.06);
+  --shadow-hover:0 4px 8px rgba(10,31,61,.06),0 16px 36px rgba(10,31,61,.10);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);font-size:13px;line-height:1.6;}
-.page{max-width:980px;margin:0 auto;padding:24px 18px 48px;}
-.hdr{background:var(--blue-deep);color:white;border-radius:4px 4px 0 0;padding:24px 28px 0;position:relative;overflow:hidden;}
-.hdr::before{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,.04);}
-.hdr-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
-.hdr-badge{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:4px 12px;font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;}
-.hdr h1{font-family:'DM Serif Display',serif;font-size:20px;font-weight:400;line-height:1.25;margin-bottom:4px;}
-.hdr .sub{font-size:11px;opacity:.75;}
-.hdr-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.1);border-top:1px solid rgba(255,255,255,.15);margin-top:18px;}
-.hdr-mi{padding:10px 14px;background:rgba(255,255,255,.06);}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--paper);color:var(--ink);font-size:13px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+.page{max-width:1000px;margin:0 auto;padding:28px 18px 56px;}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.hdr{background:linear-gradient(135deg,var(--navy-deep) 0%,var(--navy) 55%,var(--emerald) 130%);color:white;border-radius:20px;padding:28px 30px 0;position:relative;overflow:hidden;box-shadow:var(--shadow);}
+.hdr::before{content:'';position:absolute;top:-90px;right:-70px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.10),transparent 70%);}
+.hdr::after{content:'';position:absolute;bottom:-120px;left:-60px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(15,122,92,.28),transparent 70%);}
+.hdr-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:18px;position:relative;}
+.hdr-badge{background:rgba(255,255,255,.12);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.22);border-radius:20px;padding:5px 13px;font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;}
+.hdr h1{font-family:'Inter',sans-serif;font-weight:800;font-size:22px;letter-spacing:-.02em;line-height:1.25;margin-bottom:6px;}
+.hdr .sub{font-size:11.5px;opacity:.72;}
+.hdr-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.10);border-top:1px solid rgba(255,255,255,.14);margin-top:20px;border-radius:12px 12px 0 0;overflow:hidden;position:relative;}
+.hdr-mi{padding:12px 15px;background:rgba(255,255,255,.05);transition:background .25s ease;}
+.hdr-mi:hover{background:rgba(255,255,255,.09);}
 .hdr-mi .label{font-size:9px;opacity:.6;text-transform:uppercase;letter-spacing:.6px;}
-.hdr-mi .val{font-size:13px;font-weight:700;margin-top:2px;}
-.semaforo{display:flex;align-items:stretch;background:white;border:1px solid var(--border);border-top:4px solid #2e7d32;border-radius:0 0 4px 4px;margin-bottom:14px;overflow:hidden;}
-.semaforo-left{background:#2e7d32;color:white;padding:18px 22px;display:flex;flex-direction:column;justify-content:center;align-items:center;min-width:180px;}
-.semaforo-left .nivel{font-family:'JetBrains Mono',monospace;font-size:34px;font-weight:700;line-height:1;}
-.semaforo-left .etiqueta{font-size:10px;opacity:.85;text-transform:uppercase;letter-spacing:.6px;margin-top:4px;}
-.semaforo-right{flex:1;padding:16px 20px;}
-.semaforo-right h3{font-size:13px;font-weight:700;margin-bottom:6px;color:var(--blue-deep);}
-.semaforo-right .status-big{font-size:15px;font-weight:800;color:#2e7d32;margin-bottom:10px;}
+.hdr-mi .val{font-size:13.5px;font-weight:700;margin-top:3px;letter-spacing:-.01em;}
+.semaforo{display:flex;align-items:stretch;background:white;border:1px solid var(--border);border-top:4px solid #0f7a5c;border-radius:0 0 16px 16px;margin-bottom:16px;overflow:hidden;box-shadow:var(--shadow);transition:box-shadow .3s ease;}
+.semaforo:hover{box-shadow:var(--shadow-hover);}
+.semaforo-left{background:#0f7a5c;color:white;padding:20px 24px;display:flex;flex-direction:column;justify-content:center;align-items:center;min-width:190px;position:relative;overflow:hidden;}
+.semaforo-left::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,rgba(255,255,255,.18),transparent 60%);}
+.semaforo-left .nivel{font-family:'JetBrains Mono',monospace;font-size:36px;font-weight:700;line-height:1;position:relative;}
+.semaforo-left .etiqueta{font-size:10px;opacity:.9;text-transform:uppercase;letter-spacing:.6px;margin-top:5px;position:relative;}
+.semaforo-right{flex:1;padding:18px 22px;}
+.semaforo-right h3{font-size:13px;font-weight:700;margin-bottom:7px;color:var(--navy);letter-spacing:-.01em;}
+.semaforo-right .status-big{font-size:15px;font-weight:800;color:#0f7a5c;margin-bottom:11px;}
 .semaforo-scale{display:flex;gap:6px;flex-wrap:wrap;}
-.scale-item{font-size:10px;padding:3px 8px;border-radius:2px;}
-.alertas-box{background:#e8f5e9;border:1px solid #2e7d32;border-left:4px solid #2e7d32;border-radius:4px;padding:14px 18px;margin-bottom:14px;}
-.alertas-box h4{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:#1b5e20;margin-bottom:9px;}
-.alerta-item{font-size:12px;color:var(--ink);margin-bottom:7px;line-height:1.5;padding-left:10px;border-left:2px solid #2e7d32;}
-.card{background:white;border:1px solid var(--border);border-radius:4px;margin-bottom:14px;overflow:hidden;}
-.card-hdr{padding:11px 18px;display:flex;align-items:center;gap:9px;border-bottom:1px solid var(--border);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.6px;}
-.num{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:white;flex-shrink:0;}
-.card-body{padding:16px 18px;}
-.c1 .card-hdr{background:var(--blue-light);color:var(--blue-deep);} .c1 .num{background:var(--blue);}
-.c2 .card-hdr{background:#f0f4f8;color:#2c3e50;} .c2 .num{background:#2c3e50;}
-.c3 .card-hdr{background:var(--orange-light);color:#7f3800;} .c3 .num{background:var(--orange);}
-.wv{background:#f8f7f4;border:1px solid var(--border);border-radius:4px;padding:14px 16px;margin-top:12px;}
-.wv-title{font-size:11px;font-weight:700;color:var(--blue-deep);margin-bottom:12px;}
-.wb{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.scale-item{font-size:10px;padding:4px 9px;border-radius:20px;}
+.alertas-box{background:#e6f6f0;border:1px solid #0f7a5c;border-left:4px solid #0f7a5c;border-radius:14px;padding:16px 20px;margin-bottom:16px;box-shadow:var(--shadow);}
+.alertas-box h4{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:#0a3d2e;margin-bottom:10px;}
+.alerta-item{font-size:12px;color:var(--ink);margin-bottom:8px;line-height:1.55;padding-left:11px;border-left:2px solid #0f7a5c;}
+.card{background:white;border:1px solid var(--border);border-radius:16px;margin-bottom:16px;overflow:hidden;box-shadow:var(--shadow);transition:box-shadow .3s ease,transform .3s ease;}
+.card:hover{box-shadow:var(--shadow-hover);transform:translateY(-2px);}
+.card-hdr{padding:13px 20px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.6px;}
+.num{width:23px;height:23px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:white;flex-shrink:0;}
+.card-body{padding:18px 20px;max-height:2000px;overflow:hidden;transition:max-height .4s ease,padding .4s ease;}
+.card-body.collapsed{max-height:0;padding-top:0;padding-bottom:0;}
+.c1 .card-hdr{background:var(--blue-light);color:var(--navy);} .c1 .num{background:var(--navy);}
+.c2 .card-hdr{background:#eef2f2;color:var(--navy-deep);} .c2 .num{background:var(--navy-2);}
+.c3 .card-hdr{background:var(--emerald-light);color:var(--emerald);} .c3 .num{background:var(--emerald-2);}
+.c4 .card-hdr{background:var(--blue-light);color:var(--navy);} .c4 .num{background:var(--navy);}
+.wv{background:#f8f9f8;border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-top:12px;}
+.wv-title{font-size:11px;font-weight:700;color:var(--navy);margin-bottom:13px;}
+.wb{display:flex;align-items:center;gap:10px;margin-bottom:9px;}
 .wl{font-size:10px;font-weight:600;width:150px;flex-shrink:0;}
-.wt{flex:1;background:#e5e1d8;border-radius:2px;height:22px;overflow:hidden;}
-.wf{height:100%;border-radius:2px;display:flex;align-items:center;padding-left:8px;font-size:9px;font-weight:700;color:white;}
+.wt{flex:1;background:#e4e9e8;border-radius:20px;height:22px;overflow:hidden;}
+.wf{height:100%;border-radius:20px;display:flex;align-items:center;padding-left:9px;font-size:9px;font-weight:700;color:white;transition:width 1s cubic-bezier(.16,1,.3,1);}
 .wv-val{font-size:10px;font-weight:700;width:65px;text-align:right;flex-shrink:0;}
-.wv-note{font-size:9px;color:#888;margin-top:8px;}
+.wv-note{font-size:9px;color:#8a9299;margin-top:9px;}
 .tbl{width:100%;border-collapse:collapse;font-size:11.5px;}
-.tbl thead th{background:var(--ink);color:white;padding:8px 11px;text-align:left;font-size:10px;font-weight:600;letter-spacing:.4px;}
-.tbl tbody td{padding:7px 11px;border-bottom:1px solid #eee;vertical-align:middle;}
-.tbl tbody tr:hover td{background:#f9f8f5;}
+.tbl thead th{background:var(--navy-deep);color:white;padding:9px 12px;text-align:left;font-size:10px;font-weight:600;letter-spacing:.4px;}
+.tbl tbody td{padding:8px 12px;border-bottom:1px solid #eef1f1;vertical-align:middle;}
+.tbl tbody tr{transition:background .2s ease;}
+.tbl tbody tr:hover td{background:#f6f9f8;}
 .tbl tbody tr.hi td{background:#fff9f9;}
-.tbl tbody tr.ref td{background:#fffbe8;font-weight:700;}
+.tbl tbody tr.ref td{background:var(--emerald-light);font-weight:700;}
 .tbl tbody tr.warn td{background:#fff8f0;}
 .mono{font-family:'JetBrains Mono',monospace;font-size:11px;}
-.bdg{display:inline-block;padding:2px 8px;border-radius:2px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;}
+.bdg{display:inline-block;padding:3px 9px;border-radius:20px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;}
 .b-r{background:#fee2e2;color:#7f1d1d;} .b-o{background:#ffedd5;color:#9a3412;}
-.b-g{background:#dcfce7;color:var(--green);} .b-a{background:var(--amber-light);color:var(--amber);}
+.b-g{background:var(--emerald-light);color:var(--emerald);} .b-a{background:var(--amber-light);color:var(--amber);}
 .b-w{background:#fef9c3;color:#713f12;}
-.rzone{display:flex;border-radius:3px;overflow:hidden;margin-bottom:14px;height:140px;border:1px solid var(--border);}
-.rz{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;gap:5px;padding:10px 6px;text-align:center;}
+.rzone{display:flex;border-radius:12px;overflow:hidden;margin-bottom:16px;height:140px;border:1px solid var(--border);}
+.rz{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;gap:5px;padding:10px 6px;text-align:center;transition:filter .25s ease;}
+.rz:hover{filter:brightness(1.08);}
 .rz span{font-size:10px;font-weight:400;opacity:.95;line-height:1.3;}
-.umbral-item{border-radius:4px;padding:12px 14px;text-align:center;margin-bottom:8px;}
+.umbral-item{border-radius:12px;padding:13px 15px;text-align:center;margin-bottom:9px;}
 .umbral-item .u-val{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;}
 .umbral-item .u-lbl{font-size:10px;margin-top:3px;}
-.callout{background:var(--blue-light);border:1px solid #b6cff5;border-left:4px solid var(--blue);border-radius:3px;padding:13px 16px;margin-top:14px;}
-.callout-title{font-size:11px;font-weight:800;color:var(--blue-deep);margin-bottom:5px;}
+.callout{background:var(--blue-light);border:1px solid #c3d6ee;border-left:4px solid var(--navy);border-radius:12px;padding:14px 17px;margin-top:15px;}
+.callout-title{font-size:11px;font-weight:800;color:var(--navy);margin-bottom:6px;}
 .callout p{font-size:11px;color:var(--ink);line-height:1.55;}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;}
-.foot{font-size:9.5px;color:var(--grey);text-align:center;margin-top:16px;padding:12px;border-top:1px solid var(--border);line-height:1.7;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start;}
+.foot{font-size:9.5px;color:var(--grey);text-align:center;margin-top:18px;padding:14px;border-top:1px solid var(--border);line-height:1.7;}
+.foot a{color:var(--emerald);text-decoration:none;font-weight:600;}
+.foot a:hover{color:var(--navy);text-decoration:underline;}
 @media(max-width:680px){.hdr-meta{grid-template-columns:1fr 1fr;} .semaforo{flex-direction:column;} .semaforo-left{min-width:unset;} .two-col{grid-template-columns:1fr!important;}}
 </style>
 </head>
 <body>
 <div class="page">
 
-<div class="hdr">
+<div class="hdr reveal">
   <div class="hdr-top">
     <div>
       <h1>Monitor Hídrico Diario<br>Resiliencia Urbana de la Franja Costera de Asunción</h1>
@@ -91,14 +109,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);f
     <div class="hdr-badge">🔄 Auto-actualizado</div>
   </div>
   <div class="hdr-meta">
-    <div class="hdr-mi"><div class="label">Última actualización</div><div class="val">18 de August de 2026 — 09:37 hs (hora Paraguay)</div></div>
+    <div class="hdr-mi"><div class="label">Última actualización</div><div class="val">18 de August de 2026 — 12:47 hs (hora Paraguay)</div></div>
     <div class="hdr-mi"><div class="label">Fuente</div><div class="val">DMH – DINAC</div></div>
     <div class="hdr-mi"><div class="label">Asunción hoy</div><div class="val">1.41 m -3 cm ↓</div></div>
     <div class="hdr-mi"><div class="label">Nivel de alerta</div><div class="val">VERDE</div></div>
   </div>
 </div>
 
-<div class="semaforo">
+<div class="semaforo reveal">
   <div class="semaforo-left">
     <div class="nivel">1.41 m</div>
     <div class="etiqueta">Río Paraguay · Asunción</div>
@@ -107,7 +125,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);f
     <h3>Estado del drenaje del A° Las Mercedes</h3>
     <div class="status-big">✅ DRENAJE LIBRE — SIN ALERTA</div>
     <div class="semaforo-scale">
-      <div class="scale-item" style="background:#e8f5e9;color:#1b5e20;">✅ &lt; 3.20 m — Drenaje libre</div>
+      <div class="scale-item" style="background:#e6f6f0;color:#0a3d2e;">✅ &lt; 3.20 m — Drenaje libre</div>
       <div class="scale-item" style="background:#fff3e0;color:#d84315;">🟡 3.20–3.50 m — Vigilancia</div>
       <div class="scale-item" style="background:#ffedd5;color:#9a3412;">⚠️ 3.50–4.00 m — Presión backwater</div>
       <div class="scale-item" style="background:#fee2e2;color:#7f1d1d;">⛔ &gt; 4.00 m — Backwater activo</div>
@@ -117,13 +135,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);f
 
 
 
-<div class="alertas-box">
-  <h4>📋 Evaluación del día — 18 de August de 2026 — 09:37 hs (hora Paraguay)</h4>
+<div class="alertas-box reveal">
+  <h4>📋 Evaluación del día — 18 de August de 2026 — 12:47 hs (hora Paraguay)</h4>
   <div class='alerta-item'>📍 <strong>Asunción hoy: 1.41 m</strong> — ✅ DRENAJE LIBRE — SIN ALERTA.</div>
 
 </div>
 
-<div class="card c1">
+<div class="card c1 reveal">
   <div class="card-hdr"><div class="num">1</div>Propagación de la onda Norte → Sur — Río Paraguay</div>
   <div class="card-body">
     <div class="wv">
@@ -131,52 +149,60 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);f
       <div class="wb"><div class="wl">Bahía Negra</div><div class="wt"><div class="wf" style="width:56%;background:#c62828;">3.93 m</div></div><div class="wv-val" style="color:#c62828;">-2 cm</div></div>
 <div class="wb"><div class="wl">Fuerte Olimpo</div><div class="wt"><div class="wf" style="width:41%;background:#d84315;">4.03 m</div></div><div class="wv-val" style="color:#d84315;">-3 cm</div></div>
 <div class="wb"><div class="wl">Isla Margarita</div><div class="wt"><div class="wf" style="width:40%;background:#f57f17;">3.10 m</div></div><div class="wv-val" style="color:#f57f17;">-1 cm</div></div>
-<div class="wb"><div class="wl">Vallemi ⚡</div><div class="wt"><div class="wf" style="width:34%;background:#f9a825;">2.95 m</div></div><div class="wv-val" style="color:#f9a825;">estable</div></div>
-<div class="wb"><div class="wl">Concepción</div><div class="wt"><div class="wf" style="width:25%;background:#66bb6a;">2.19 m</div></div><div class="wv-val" style="color:#66bb6a;">-1 cm</div></div>
-<div class="wb"><div class="wl">Asunción ⭐</div><div class="wt"><div class="wf" style="width:15%;background:#2e7d32;">1.41 m</div></div><div class="wv-val" style="color:#2e7d32;">-3 cm</div></div>
+<div class="wb"><div class="wl">Vallemi ⚡</div><div class="wt"><div class="wf" style="width:34%;background:#c9a227;">2.95 m</div></div><div class="wv-val" style="color:#c9a227;">estable</div></div>
+<div class="wb"><div class="wl">Concepción</div><div class="wt"><div class="wf" style="width:25%;background:#1f9d78;">2.19 m</div></div><div class="wv-val" style="color:#1f9d78;">-1 cm</div></div>
+<div class="wb"><div class="wl">Asunción ⭐</div><div class="wt"><div class="wf" style="width:15%;background:#0f7a5c;">1.41 m</div></div><div class="wv-val" style="color:#0f7a5c;">-3 cm</div></div>
 
       <div class="wv-note">⬇ Dirección de flujo sur. ⚡ Vallemi = señal de avance 5–8 días antes de Asunción. ⭐ = referencia directa del proyecto.</div>
     </div>
   </div>
 </div>
 
-<div class="card c2">
+<div class="card c2 reveal">
   <div class="card-hdr"><div class="num">2</div>Red completa Río Paraguay — Estaciones convencionales</div>
   <div class="card-body">
     <table class="tbl">
       <thead><tr><th>Localidad</th><th>Nivel actual</th><th>Var. diaria</th><th>Máx. histórico</th><th>% del máx.</th><th>Estado</th></tr></thead>
-      <tbody><tr class=""><td>Bahía Negra</td><td class="mono"><strong>3.93 m</strong></td><td style="color:#2e7d32;font-weight:700">-2 cm ↓</td><td class="mono">6.95 m</td><td>56.5%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
-<tr class=""><td>Fuerte Olimpo</td><td class="mono"><strong>4.03 m</strong></td><td style="color:#2e7d32;font-weight:700">-3 cm ↓</td><td class="mono">9.60 m</td><td>42.0%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
+      <tbody><tr class=""><td>Bahía Negra</td><td class="mono"><strong>3.93 m</strong></td><td style="color:#0f7a5c;font-weight:700">-2 cm ↓</td><td class="mono">6.95 m</td><td>56.5%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
+<tr class=""><td>Fuerte Olimpo</td><td class="mono"><strong>4.03 m</strong></td><td style="color:#0f7a5c;font-weight:700">-3 cm ↓</td><td class="mono">9.60 m</td><td>42.0%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
 <tr class=""><td>Isla Margarita</td><td class="mono"><strong>3.10 m</strong></td><td style="color:#888;font-weight:700">-1 cm</td><td class="mono">7.70 m</td><td>40.3%</td><td><span class="bdg b-a">ESTABLE</span></td></tr>
 <tr class=""><td>⚡ Vallemi</td><td class="mono"><strong>2.95 m</strong></td><td style="color:#888;font-weight:700">+0 cm</td><td class="mono">8.56 m</td><td>34.5%</td><td><span class="bdg b-a">ESTABLE</span></td></tr>
 <tr class=""><td>Concepción</td><td class="mono"><strong>2.19 m</strong></td><td style="color:#888;font-weight:700">-1 cm</td><td class="mono">8.66 m</td><td>25.3%</td><td><span class="bdg b-a">ESTABLE</span></td></tr>
-<tr class=""><td>Rosario</td><td class="mono"><strong>1.89 m</strong></td><td style="color:#2e7d32;font-weight:700">-2 cm ↓</td><td class="mono">8.03 m</td><td>23.5%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
+<tr class=""><td>Rosario</td><td class="mono"><strong>1.89 m</strong></td><td style="color:#0f7a5c;font-weight:700">-2 cm ↓</td><td class="mono">8.03 m</td><td>23.5%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
 <tr class=""><td>Puerto Antequera</td><td class="mono"><strong>1.83 m</strong></td><td style="color:#888;font-weight:700">+0 cm</td><td class="mono">6.02 m</td><td>30.4%</td><td><span class="bdg b-a">ESTABLE</span></td></tr>
-<tr class=""><td>Villeta</td><td class="mono"><strong>1.82 m</strong></td><td style="color:#2e7d32;font-weight:700">-4 cm ↓</td><td class="mono">8.94 m</td><td>20.4%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
-<tr class="ref"><td>⭐ Asunción</td><td class="mono"><strong>1.41 m</strong></td><td style="color:#2e7d32;font-weight:700">-3 cm ↓</td><td class="mono">9.01 m</td><td>15.6%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
-<tr class=""><td>Ita Enramada</td><td class="mono"><strong>1.91 m</strong></td><td style="color:#2e7d32;font-weight:700">-3 cm ↓</td><td class="mono">5.80 m</td><td>32.9%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
-<tr class=""><td>Humaitá</td><td class="mono"><strong>2.56 m</strong></td><td style="color:#2e7d32;font-weight:700">-12 cm ↓</td><td class="mono">7.74 m</td><td>33.1%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
-<tr class=""><td>Alberdi</td><td class="mono"><strong>3.08 m</strong></td><td style="color:#2e7d32;font-weight:700">-4 cm ↓</td><td class="mono">10.14 m</td><td>30.4%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
-<tr class=""><td>Pilar</td><td class="mono"><strong>3.12 m</strong></td><td style="color:#2e7d32;font-weight:700">-9 cm ↓</td><td class="mono">10.05 m</td><td>31.0%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
+<tr class=""><td>Villeta</td><td class="mono"><strong>1.82 m</strong></td><td style="color:#0f7a5c;font-weight:700">-4 cm ↓</td><td class="mono">8.94 m</td><td>20.4%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
+<tr class="ref"><td>⭐ Asunción</td><td class="mono"><strong>1.41 m</strong></td><td style="color:#0f7a5c;font-weight:700">-3 cm ↓</td><td class="mono">9.01 m</td><td>15.6%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
+<tr class=""><td>Ita Enramada</td><td class="mono"><strong>1.91 m</strong></td><td style="color:#0f7a5c;font-weight:700">-3 cm ↓</td><td class="mono">5.80 m</td><td>32.9%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
+<tr class=""><td>Humaitá</td><td class="mono"><strong>2.56 m</strong></td><td style="color:#0f7a5c;font-weight:700">-12 cm ↓</td><td class="mono">7.74 m</td><td>33.1%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
+<tr class=""><td>Alberdi</td><td class="mono"><strong>3.08 m</strong></td><td style="color:#0f7a5c;font-weight:700">-4 cm ↓</td><td class="mono">10.14 m</td><td>30.4%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
+<tr class=""><td>Pilar</td><td class="mono"><strong>3.12 m</strong></td><td style="color:#0f7a5c;font-weight:700">-9 cm ↓</td><td class="mono">10.05 m</td><td>31.0%</td><td><span class="bdg b-g">BAJANDO</span></td></tr>
 </tbody>
     </table>
-    <div style="font-size:9.5px;color:#888;margin-top:8px;">⭐ referencia directa del proyecto &nbsp;|&nbsp; ⚡ señal de alerta temprana</div>
+    <div style="font-size:9.5px;color:#8a9299;margin-top:9px;">⭐ referencia directa del proyecto &nbsp;|&nbsp; ⚡ señal de alerta temprana</div>
   </div>
 </div>
 
-<div class="card c3">
-  <div class="card-hdr"><div class="num">3</div>Umbrales de riesgo y mapa — Proyecto Resiliencia Urbana Franja Costera</div>
+<div class="card c4 reveal">
+  <div class="card-hdr" style="cursor:pointer;justify-content:space-between;user-select:none;" onclick="toggleCard(this)"><div style="display:flex;align-items:center;gap:10px;"><div class="num">3</div>Evolución histórica — Nivel del Río Paraguay en Asunción</div><span class="chev" style="transition:transform .3s ease;font-size:13px;">▾</span></div>
+  <div class="card-body">
+    <canvas id="histChart" height="100"></canvas>
+    <div class="wv-note">Serie diaria publicada por la DMH-DINAC para la estación Asunción. Datos oficiales, sin interpolar.</div>
+  </div>
+</div>
+
+<div class="card c3 reveal">
+  <div class="card-hdr"><div class="num">4</div>Umbrales de riesgo y mapa — Proyecto Resiliencia Urbana Franja Costera</div>
   <div class="card-body">
     <div class="two-col">
       <div>
         <div class="rzone">
-          <div class="rz" style="background:#2e7d32;">Norte<br><span>Mayor cota relativa</span><br><span style="font-weight:700">RIESGO MEDIO</span></div>
+          <div class="rz" style="background:var(--emerald-2);">Norte<br><span>Mayor cota relativa</span><br><span style="font-weight:700">RIESGO MEDIO</span></div>
           <div class="rz" style="background:#d84315;">Centro<br><span>Zona de transición</span><br><span style="font-weight:700">RIESGO MEDIO-ALTO</span></div>
           <div class="rz" style="background:#c62828;">Sur<br><span>Cota baja · Alta densidad adj.</span><br><span style="font-weight:700">RIESGO ALTO</span></div>
         </div>
-        <div class="umbral-item" style="background:#e8f5e9;">
-          <div class="u-val" style="color:#1b5e20;">&lt; 3.20 m</div>
-          <div class="u-lbl" style="color:#1b5e20;">✅ Drenaje libre — obras normales</div>
+        <div class="umbral-item" style="background:var(--emerald-light);">
+          <div class="u-val" style="color:#0a3d2e;">&lt; 3.20 m</div>
+          <div class="u-lbl" style="color:#0a3d2e;">✅ Drenaje libre — obras normales</div>
         </div>
         <div class="umbral-item" style="background:#fff3e0;">
           <div class="u-val" style="color:#d84315;">3.20 – 3.50 m</div>
@@ -192,11 +218,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);f
         </div>
       </div>
       <div>
-        <div style="font-size:11px;font-weight:700;color:var(--blue-deep);margin-bottom:8px;">🗺️ Río Paraguay y zonas de riesgo del proyecto</div>
-        <div id="map" style="height:420px;border-radius:4px;border:1px solid var(--border);overflow:hidden;z-index:0;"></div>
-        <div style="font-size:9px;color:var(--grey);margin-top:5px;display:flex;gap:10px;flex-wrap:wrap;">
+        <div style="font-size:11px;font-weight:700;color:var(--navy);margin-bottom:8px;">🗺️ Río Paraguay y zonas de riesgo del proyecto</div>
+        <div id="map" style="height:420px;border-radius:12px;border:1px solid var(--border);overflow:hidden;z-index:0;"></div>
+        <div style="font-size:9px;color:var(--grey);margin-top:6px;display:flex;gap:10px;flex-wrap:wrap;">
           <span>🔵 Estaciones DMH</span>
-          <span style="color:#2e7d32;">■ Norte</span>
+          <span style="color:var(--emerald-2);">■ Norte</span>
           <span style="color:#d84315;">■ Centro</span>
           <span style="color:#c62828;">■ Sur</span>
           <span style="color:#f9c000;">— PLANO_PROYECTO</span>
@@ -218,8 +244,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);f
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 var map = L.map('map',{zoomControl:true,scrollWheelZoom:true}).setView([-25.2735,-57.6137],15);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-  attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',maxZoom:19
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{
+  attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/attributions">CARTO</a>',
+  subdomains:'abcd', maxZoom:19
 }).addTo(map);
 
 var stationData = [
@@ -237,8 +264,8 @@ var stationData = [
   { name:"Alberdi", lat:-26.18, lng:-58.13, nivel:"3.08 m", tend:"-4 cm", key:false },
   { name:"Pilar", lat:-26.86, lng:-58.3, nivel:"3.12 m", tend:"-9 cm", key:false }
 ];
-var blueIcon = L.divIcon({className:'',html:'<div style="width:10px;height:10px;background:#1565c0;border:2px solid white;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,.4);"></div>',iconSize:[10,10],iconAnchor:[5,5]});
-var redIcon  = L.divIcon({className:'',html:'<div style="width:14px;height:14px;background:#c62828;border:2px solid white;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,.5);"></div>',iconSize:[14,14],iconAnchor:[7,7]});
+var blueIcon = L.divIcon({className:'',html:'<div style="width:10px;height:10px;background:#123258;border:2px solid white;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,.35);"></div>',iconSize:[10,10],iconAnchor:[5,5]});
+var redIcon  = L.divIcon({className:'',html:'<div style="width:14px;height:14px;background:#c62828;border:2px solid white;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,.45);"></div>',iconSize:[14,14],iconAnchor:[7,7]});
 
 stationData.forEach(function(s){
   L.marker([s.lat,s.lng],{icon:s.key?redIcon:blueIcon}).addTo(map)
@@ -246,13 +273,11 @@ stationData.forEach(function(s){
 });
 
 L.polyline([[-19.95,-57.85],[-20.22,-58.16],[-21.04,-57.87],[-21.95,-57.94],[-22.54,-57.97],[-23.41,-57.43],[-24.45,-57.22],[-24.70,-57.35],[-25.28,-57.63],[-25.43,-57.60],[-26.18,-58.13],[-26.86,-58.30],[-27.06,-58.52]],
-  {color:'#1e88e5',weight:3,opacity:0.7}).addTo(map).bindTooltip('Río Paraguay',{sticky:true});
-L.polygon([[-25.22,-57.67],[-25.24,-57.68],[-25.27,-57.68],[-25.29,-57.67],[-25.30,-57.65],[-25.27,-57.63],[-25.24,-57.63],[-25.22,-57.65]],
-  {color:'#1565c0',weight:1.5,fillColor:'#1e88e5',fillOpacity:0.3}).addTo(map).bindTooltip('Bahía de Asunción',{sticky:true});
+  {color:'#123258',weight:3,opacity:0.75}).addTo(map).bindTooltip('Río Paraguay',{sticky:true});
 // ── Polígono real del proyecto (PLANO_PROYECTO.shp UTM 21S → WGS84) ──
 var proyCoords = [[-25.2726697, -57.6126065], [-25.2730239, -57.6128906], [-25.2739879, -57.6135111], [-25.2742305, -57.6140602], [-25.2743007, -57.614282], [-25.2743323, -57.6145004], [-25.2742658, -57.614744], [-25.2741944, -57.6149574], [-25.2739569, -57.6147823], [-25.2738742, -57.614919], [-25.2718199, -57.613429], [-25.2719121, -57.6132752], [-25.2724166, -57.6124474], [-25.2726697, -57.6126065]];
 var proyPolygon = L.polygon(proyCoords,{color:'#f9c000',weight:3,opacity:1,fillColor:'#f9c000',fillOpacity:0.12,dashArray:'6 4'}).addTo(map).bindTooltip('<strong>PLANO_PROYECTO</strong><br>Resiliencia Urbana Franja Costera<br>Área: 33,304 m²',{sticky:true});
-L.polygon([[-25.2718199,-57.6134290],[-25.2719121,-57.6132752],[-25.2724166,-57.6124474],[-25.2726697,-57.6126065],[-25.2730239,-57.6128906],[-25.2731500,-57.6134000],[-25.2722000,-57.6138000]],{color:'#2e7d32',weight:1.5,fillColor:'#2e7d32',fillOpacity:0.40,dashArray:'3 3'}).addTo(map).bindTooltip('Zona NORTE — Riesgo MEDIO',{sticky:true});
+L.polygon([[-25.2718199,-57.6134290],[-25.2719121,-57.6132752],[-25.2724166,-57.6124474],[-25.2726697,-57.6126065],[-25.2730239,-57.6128906],[-25.2731500,-57.6134000],[-25.2722000,-57.6138000]],{color:'#0f7a5c',weight:1.5,fillColor:'#0f7a5c',fillOpacity:0.40,dashArray:'3 3'}).addTo(map).bindTooltip('Zona NORTE — Riesgo MEDIO',{sticky:true});
 L.polygon([[-25.2731500,-57.6134000],[-25.2730239,-57.6128906],[-25.2735000,-57.6133000],[-25.2739879,-57.6135111],[-25.2738000,-57.6141000],[-25.2734000,-57.6143000],[-25.2731500,-57.6140000]],{color:'#d84315',weight:1.5,fillColor:'#d84315',fillOpacity:0.40,dashArray:'3 3'}).addTo(map).bindTooltip('Zona CENTRO — Riesgo MEDIO-ALTO',{sticky:true});
 L.polygon([[-25.2738000,-57.6141000],[-25.2739879,-57.6135111],[-25.2742305,-57.6140602],[-25.2743007,-57.6142820],[-25.2743323,-57.6145004],[-25.2742658,-57.6147440],[-25.2741944,-57.6149574],[-25.2739569,-57.6147823],[-25.2738742,-57.6149190],[-25.2734000,-57.6143000]],{color:'#c62828',weight:1.5,fillColor:'#c62828',fillOpacity:0.40,dashArray:'3 3'}).addTo(map).bindTooltip('Zona SUR — Riesgo ALTO',{sticky:true});
 map.fitBounds(proyPolygon.getBounds().pad(0.5));
@@ -275,6 +300,64 @@ parqueCoords.forEach(function(ring) {
     fillColor:'#80cbc4', fillOpacity:0.30,
     dashArray:'5 3'
   }).addTo(map).bindTooltip('<strong>Parque Caballero</strong>', {sticky:true});
+});
+
+// ── Gráfico histórico Asunción ────────────────────────────────────────
+var historial = [{"fecha": "21-05-2026", "nivel": 3.18}, {"fecha": "22-05-2026", "nivel": 3.15}, {"fecha": "23-05-2026", "nivel": 3.13}, {"fecha": "24-05-2026", "nivel": 3.1}, {"fecha": "25-05-2026", "nivel": 3.1}, {"fecha": "26-05-2026", "nivel": 3.09}, {"fecha": "27-05-2026", "nivel": 3.08}, {"fecha": "28-05-2026", "nivel": 3.05}, {"fecha": "29-05-2026", "nivel": 3.02}, {"fecha": "30-05-2026", "nivel": 3.07}, {"fecha": "31-05-2026", "nivel": 3.03}, {"fecha": "01-06-2026", "nivel": 3.0}, {"fecha": "02-06-2026", "nivel": 2.97}, {"fecha": "03-06-2026", "nivel": 2.95}, {"fecha": "04-06-2026", "nivel": 2.92}, {"fecha": "05-06-2026", "nivel": 2.89}, {"fecha": "06-06-2026", "nivel": 2.87}, {"fecha": "07-06-2026", "nivel": 2.84}, {"fecha": "08-06-2026", "nivel": 2.81}, {"fecha": "09-06-2026", "nivel": 2.77}, {"fecha": "10-06-2026", "nivel": 2.73}, {"fecha": "11-06-2026", "nivel": 2.7}, {"fecha": "12-06-2026", "nivel": 2.66}, {"fecha": "13-06-2026", "nivel": 2.63}, {"fecha": "14-06-2026", "nivel": 2.6}, {"fecha": "15-06-2026", "nivel": 2.57}, {"fecha": "16-06-2026", "nivel": 2.55}, {"fecha": "17-06-2026", "nivel": 2.52}, {"fecha": "18-06-2026", "nivel": 2.48}, {"fecha": "19-06-2026", "nivel": 2.5}, {"fecha": "20-06-2026", "nivel": 2.65}, {"fecha": "21-06-2026", "nivel": 2.68}, {"fecha": "22-06-2026", "nivel": 2.68}, {"fecha": "23-06-2026", "nivel": 2.66}, {"fecha": "24-06-2026", "nivel": 2.65}, {"fecha": "25-06-2026", "nivel": 2.63}, {"fecha": "26-06-2026", "nivel": 2.6}, {"fecha": "27-06-2026", "nivel": 2.58}, {"fecha": "28-06-2026", "nivel": 2.56}, {"fecha": "29-06-2026", "nivel": 2.56}, {"fecha": "30-06-2026", "nivel": 2.55}, {"fecha": "01-07-2026", "nivel": 2.53}, {"fecha": "02-07-2026", "nivel": 2.54}, {"fecha": "03-07-2026", "nivel": 2.54}, {"fecha": "04-07-2026", "nivel": 2.53}, {"fecha": "05-07-2026", "nivel": 2.51}, {"fecha": "06-07-2026", "nivel": 2.49}, {"fecha": "07-07-2026", "nivel": 2.47}, {"fecha": "08-07-2026", "nivel": 2.43}, {"fecha": "09-07-2026", "nivel": 2.4}, {"fecha": "10-07-2026", "nivel": 2.35}, {"fecha": "11-07-2026", "nivel": 2.32}, {"fecha": "12-07-2026", "nivel": 2.29}, {"fecha": "13-07-2026", "nivel": 2.25}, {"fecha": "14-07-2026", "nivel": 2.19}, {"fecha": "15-07-2026", "nivel": 2.13}, {"fecha": "16-07-2026", "nivel": 2.08}, {"fecha": "17-07-2026", "nivel": 2.0}, {"fecha": "18-07-2026", "nivel": 1.94}, {"fecha": "19-07-2026", "nivel": 1.89}, {"fecha": "20-07-2026", "nivel": 1.88}, {"fecha": "21-07-2026", "nivel": 1.86}, {"fecha": "22-07-2026", "nivel": 1.85}, {"fecha": "23-07-2026", "nivel": 1.84}, {"fecha": "24-07-2026", "nivel": 1.81}, {"fecha": "25-07-2026", "nivel": 1.79}, {"fecha": "26-07-2026", "nivel": 1.77}, {"fecha": "27-07-2026", "nivel": 1.77}, {"fecha": "28-07-2026", "nivel": 1.74}, {"fecha": "29-07-2026", "nivel": 1.71}, {"fecha": "30-07-2026", "nivel": 1.71}, {"fecha": "31-07-2026", "nivel": 1.69}, {"fecha": "01-08-2026", "nivel": 1.64}, {"fecha": "02-08-2026", "nivel": 1.64}, {"fecha": "03-08-2026", "nivel": 1.61}, {"fecha": "04-08-2026", "nivel": 1.6}, {"fecha": "05-08-2026", "nivel": 1.58}, {"fecha": "06-08-2026", "nivel": 1.56}, {"fecha": "07-08-2026", "nivel": 1.54}, {"fecha": "08-08-2026", "nivel": 1.51}, {"fecha": "09-08-2026", "nivel": 1.49}, {"fecha": "10-08-2026", "nivel": 1.48}, {"fecha": "11-08-2026", "nivel": 1.48}, {"fecha": "12-08-2026", "nivel": 1.49}, {"fecha": "13-08-2026", "nivel": 1.52}, {"fecha": "14-08-2026", "nivel": 1.51}, {"fecha": "15-08-2026", "nivel": 1.5}, {"fecha": "16-08-2026", "nivel": 1.48}, {"fecha": "17-08-2026", "nivel": 1.44}, {"fecha": "18-08-2026", "nivel": 1.41}];
+if (historial.length) {
+  var ctx = document.getElementById('histChart').getContext('2d');
+  var grad = ctx.createLinearGradient(0,0,0,260);
+  grad.addColorStop(0,'rgba(15,122,92,0.28)');
+  grad.addColorStop(1,'rgba(15,122,92,0)');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: historial.map(function(r){return r.fecha;}),
+      datasets: [{
+        label: 'Nivel Asunción (m)',
+        data: historial.map(function(r){return r.nivel;}),
+        borderColor: '#0f7a5c',
+        backgroundColor: grad,
+        borderWidth: 2.5,
+        pointRadius: 0,
+        pointHoverRadius: 5,
+        pointHitRadius: 12,
+        tension: 0.35,
+        fill: true
+      }]
+    },
+    options: {
+      responsive: true,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#0a1f3d',
+          padding: 10,
+          titleFont: { size: 11 },
+          bodyFont: { size: 12, weight: '700' },
+          callbacks: { label: function(ctx){ return ctx.parsed.y.toFixed(2) + ' m'; } }
+        }
+      },
+      scales: {
+        x: { grid: { display:false }, ticks: { maxTicksLimit: 8, font: { size: 10 } } },
+        y: { grid: { color:'#eef1f1' }, ticks: { font: { size: 10 } } }
+      }
+    }
+  });
+}
+
+function toggleCard(hdr) {
+  var body = hdr.nextElementSibling;
+  var chev = hdr.querySelector('.chev');
+  body.classList.toggle('collapsed');
+  chev.style.transform = body.classList.contains('collapsed') ? 'rotate(-90deg)' : 'rotate(0deg)';
+}
+
+// ── Animación de entrada (fade-in escalonado al cargar) ───────────────
+var revealEls = document.querySelectorAll('.reveal');
+revealEls.forEach(function(el, i){
+  setTimeout(function(){ el.classList.add('visible'); }, 120 + i*80);
 });
 </script>
 </body>
