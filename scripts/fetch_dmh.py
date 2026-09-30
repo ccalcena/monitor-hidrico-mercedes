@@ -4,7 +4,7 @@ Scrappea DMH-DINAC usando Playwright (navegador real) para bypassear bloqueos 40
 y genera docs/index.html actualizado
 """
 
-import os, re, sys
+import os, re, sys, unicodedata
 from datetime import datetime, timezone, timedelta
 from bs4 import BeautifulSoup
 
@@ -24,12 +24,14 @@ UMBRAL_AMARILLO = 3.50
 UMBRAL_ROJO     = 4.00
 
 ESTACIONES = [
+    "Puerto Ladario",  # <-- nuevo (aguas arriba de Bahía Negra)
     "Bahía Negra","Fuerte Olimpo","Isla Margarita","Vallemi",
     "Concepción","Rosario","Puerto Antequera","Villeta",
     "Asunción","Ita Enramada","Humaitá","Alberdi","Pilar"
 ]
 
 COORDS = {
+    "Puerto Ladario":   (-19.01,-57.60),  # <-- nuevo (Ladário, MS, Brasil)
     "Bahía Negra":      (-20.22,-58.16),
     "Fuerte Olimpo":    (-21.04,-57.87),
     "Isla Margarita":   (-21.95,-57.94),
@@ -137,6 +139,18 @@ def scrape_requests():
             print(f"  requests WARN (verify={verify}): {e}")
     return None
 
+# ── Normalización de nombres de estación ──────────────────────────
+def _norm(s):
+    s = unicodedata.normalize("NFD", s)
+    return "".join(c for c in s if unicodedata.category(c) != "Mn").lower().strip()
+
+def canon_name(loc):
+    """Mapea variantes del nombre de la DMH al nombre canónico usado en el script."""
+    n = _norm(loc)
+    if "ladar" in n:
+        return "Puerto Ladario"
+    return loc
+
 # ── Parser ────────────────────────────────────────────────────────
 def parse(html):
     soup = BeautifulSoup(html, "lxml")
@@ -160,7 +174,7 @@ def parse(html):
                 var   = intnum(cells[3]) if len(cells) > 3 else None
                 maxh  = num(cells[5]) if len(cells) > 5 else None
                 if nivel is not None:
-                    stations[loc] = {
+                    stations[canon_name(loc)] = {
                         "nivel": nivel, "var": var, "max": maxh,
                         "pct": round(nivel/maxh*100,1) if maxh and maxh > 0 else None
                     }
@@ -219,7 +233,9 @@ def get_stations():
         return {}
 
     stations = parse(html)
-    print(f"  {len(stations)} estaciones parseadas")
+    print(f"  {len(stations)} estaciones parseadas: {list(stations.keys())}")
+    if "Puerto Ladario" not in stations:
+        print("  WARN: 'Puerto Ladario' no aparece en la tabla parseada (revisar nombre o URL en la DMH)")
     return stations
 
 # ── Lógica de evaluación ──────────────────────────────────────────
@@ -233,6 +249,11 @@ def semaforo(nivel):
 def evaluar(st):
     alertas, nivel_alerta = [], "verde"
     def g(n): return st.get(n, {})
+
+    lad = g("Puerto Ladario")
+    if (lad.get("var") or 0) > 0 and lad.get("nivel"):
+        alertas.append(f"🇧🇷 <strong>Puerto Ladario subiendo</strong> ({lad['nivel']:.2f} m, +{lad['var']} cm) — señal aguas arriba de Bahía Negra; la onda tardará semanas en llegar a Asunción.")
+        if nivel_alerta == "verde": nivel_alerta = "amarillo"
 
     bn = g("Bahía Negra")
     if (bn.get("var") or 0) > 0 and bn.get("nivel"):
@@ -275,8 +296,8 @@ def build_rows(st):
             tc="#0f7a5c"; tt=f"{var} cm ↓"; bdg='<span class="bdg b-g">BAJANDO</span>'
         else:
             tc="#888"; tt=f"{var:+d} cm" if var is not None else "—"; bdg='<span class="bdg b-a">ESTABLE</span>'
-        rc  = "ref" if nombre=="Asunción" else ("warn" if nombre=="Vallemi" and (var or 0)>0 else ("hi" if nombre=="Bahía Negra" and (var or 0)>0 else ""))
-        lbl = "⭐ Asunción" if nombre=="Asunción" else ("⚡ Vallemi" if nombre=="Vallemi" else nombre)
+        rc  = "ref" if nombre=="Asunción" else ("warn" if nombre=="Vallemi" and (var or 0)>0 else ("hi" if nombre in ("Bahía Negra","Puerto Ladario") and (var or 0)>0 else ""))
+        lbl = "⭐ Asunción" if nombre=="Asunción" else ("⚡ Vallemi" if nombre=="Vallemi" else ("🇧🇷 Puerto Ladario" if nombre=="Puerto Ladario" else nombre))
         rows += f'<tr class="{rc}"><td>{lbl}</td><td class="mono"><strong>{nv}</strong></td><td style="color:{tc};font-weight:700">{tt}</td><td class="mono">{mv}</td><td>{pv}</td><td>{bdg}</td></tr>\n'
     return rows
 
@@ -284,13 +305,15 @@ def build_waves(st):
     def bar(nombre, color, extra=""):
         s     = st.get(nombre, {})
         nivel = s.get("nivel", 0) or 0
-        maxh  = s.get("max", 10) or 10
+        # Si la DMH no publica máximo para Ladário, usar valor propio (ajustar al máx. real)
+        maxh  = s.get("max") or (7.0 if nombre == "Puerto Ladario" else 10)
         pct   = min(int(nivel/maxh*100), 100)
         var   = s.get("var", 0) or 0
         tend  = f"+{var} cm" if var>0 else (f"{var} cm" if var<0 else "estable")
         lbl   = f"{nombre} {extra}".strip()
         return f'<div class="wb"><div class="wl">{lbl}</div><div class="wt"><div class="wf" style="width:{pct}%;background:{color};">{nivel:.2f} m</div></div><div class="wv-val" style="color:{color};">{tend}</div></div>\n'
-    w  = bar("Bahía Negra",    "#c62828")
+    w  = bar("Puerto Ladario", "#8e1b1b", "🇧🇷")
+    w += bar("Bahía Negra",    "#c62828")
     w += bar("Fuerte Olimpo",  "#d84315")
     w += bar("Isla Margarita", "#f57f17")
     w += bar("Vallemi",        "#c9a227", "⚡")
@@ -305,7 +328,7 @@ def build_stations_js(st):
         nivel = f"{s['nivel']:.2f} m" if s.get("nivel") is not None else "—"
         var   = s.get("var", 0) or 0
         tend  = f"+{var} cm" if var>0 else (f"{var} cm" if var<0 else "estable")
-        key   = "true" if nombre in ("Vallemi","Asunción") else "false"
+        key   = "true" if nombre in ("Vallemi","Asunción","Puerto Ladario") else "false"
         lines.append(f'  {{ name:"{nombre}", lat:{lat}, lng:{lng}, nivel:"{nivel}", tend:"{tend}", key:{key} }}')
     return "[\n" + ",\n".join(lines) + "\n]"
 
@@ -496,7 +519,7 @@ body{{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background
     <div class="wv">
       <div class="wv-title">🔁 Estado actual — nivel relativo al máximo histórico de cada estación</div>
       {waves}
-      <div class="wv-note">⬇ Dirección de flujo sur. ⚡ Vallemi = señal de avance 5–8 días antes de Asunción. ⭐ = referencia directa del proyecto.</div>
+      <div class="wv-note">⬇ Dirección de flujo sur. 🇧🇷 Puerto Ladario = extremo aguas arriba (Pantanal, atenúa y retrasa la onda). ⚡ Vallemi = señal de avance 5–8 días antes de Asunción. ⭐ = referencia directa del proyecto.</div>
     </div>
   </div>
 </div>
@@ -508,7 +531,7 @@ body{{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background
       <thead><tr><th>Localidad</th><th>Nivel actual</th><th>Var. diaria</th><th>Máx. histórico</th><th>% del máx.</th><th>Estado</th></tr></thead>
       <tbody>{rows}</tbody>
     </table>
-    <div style="font-size:9.5px;color:#8a9299;margin-top:9px;">⭐ referencia directa del proyecto &nbsp;|&nbsp; ⚡ señal de alerta temprana</div>
+    <div style="font-size:9.5px;color:#8a9299;margin-top:9px;">⭐ referencia directa del proyecto &nbsp;|&nbsp; ⚡ señal de alerta temprana &nbsp;|&nbsp; 🇧🇷 estación en Brasil (cota en datum brasileño, no comparable en valor absoluto)</div>
   </div>
 </div>
 
@@ -588,7 +611,7 @@ stationData.forEach(function(s){{
    .bindTooltip('<strong>'+s.name+'</strong><br>Nivel: '+s.nivel+'<br>Tendencia: '+s.tend,{{sticky:true}});
 }});
 
-L.polyline([[-19.95,-57.85],[-20.22,-58.16],[-21.04,-57.87],[-21.95,-57.94],[-22.54,-57.97],[-23.41,-57.43],[-24.45,-57.22],[-24.70,-57.35],[-25.28,-57.63],[-25.43,-57.60],[-26.18,-58.13],[-26.86,-58.30],[-27.06,-58.52]],
+L.polyline([[-19.01,-57.60],[-19.95,-57.85],[-20.22,-58.16],[-21.04,-57.87],[-21.95,-57.94],[-22.54,-57.97],[-23.41,-57.43],[-24.45,-57.22],[-24.70,-57.35],[-25.28,-57.63],[-25.43,-57.60],[-26.18,-58.13],[-26.86,-58.30],[-27.06,-58.52]],
   {{color:'#123258',weight:3,opacity:0.75}}).addTo(map).bindTooltip('Río Paraguay',{{sticky:true}});
 // ── Polígono real del proyecto (PLANO_PROYECTO.shp UTM 21S → WGS84) ──
 var proyCoords = {proj_coords_js};
