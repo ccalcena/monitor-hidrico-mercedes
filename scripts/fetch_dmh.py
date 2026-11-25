@@ -589,7 +589,7 @@ body{{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background
 
 <div class="foot">
   Monitor automático · Fuente: <a href="https://www.meteorologia.gov.py/nivel-rio/indexconvencional.php" target="_blank">DMH-DINAC — meteorologia.gov.py</a><br>
-  Referencia técnica: Monitoreo Hidrométrico A° Las Mercedes — INCLAM-HIDROCONTROL / HydroB&ck, Mayo 2022<br>
+  Referencia técnica: Datos del proyecto de Saneamiento de la Bahía, Monitoreo Hidrométrico A° Las Mercedes — INCLAM-HIDROCONTROL / HydroBrock, Mayo 2022<br>
   <strong>Uso interno — Resiliencia Urbana de la Franja Costera de Asunción · Paraguay</strong>
 </div>
 </div>
@@ -597,10 +597,11 @@ body{{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 var map = L.map('map',{{zoomControl:true,scrollWheelZoom:true}}).setView([-25.2735,-57.6137],15);
-L.tileLayer('https://{{s}}.basemaps.cartocdn.com/light_all/{{z}}/{{x}}/{{y}}{{r}}.png',{{
-  attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/attributions">CARTO</a>',
-  subdomains:'abcd', maxZoom:19
+var baseMap = L.tileLayer('https://tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png',{{
+  attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  maxZoom:19
 }}).addTo(map);
+baseMap.getContainer().style.filter = 'grayscale(0.92) brightness(1.08) contrast(0.9) saturate(0.6)';
 
 var stationData = {sjs};
 var blueIcon = L.divIcon({{className:'',html:'<div style="width:10px;height:10px;background:#123258;border:2px solid white;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,.35);"></div>',iconSize:[10,10],iconAnchor:[5,5]}});
