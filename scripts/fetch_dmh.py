@@ -4,7 +4,7 @@ Scrappea DMH-DINAC usando Playwright (navegador real) para bypassear bloqueos 40
 y genera docs/index.html actualizado
 """
 
-import os, re, sys, unicodedata
+import os, re, sys, json, unicodedata
 from datetime import datetime, timezone, timedelta
 from bs4 import BeautifulSoup
 
@@ -22,6 +22,9 @@ ASUNCION_HIST_URL = "https://www.meteorologia.gov.py/nivel-rio/vermas_convencion
 UMBRAL_VERDE    = 3.20
 UMBRAL_AMARILLO = 3.50
 UMBRAL_ROJO     = 4.00
+
+MESES = ["enero","febrero","marzo","abril","mayo","junio","julio",
+         "agosto","septiembre","octubre","noviembre","diciembre"]
 
 ESTACIONES = [
     "Puerto Ladario",  # <-- nuevo (aguas arriba de Bahía Negra)
@@ -93,6 +96,10 @@ def read_parque():
 # ── Tiempo ────────────────────────────────────────────────────────
 def now_py():
     return datetime.now(timezone(timedelta(hours=-4)))
+
+def fecha_es(dt):
+    """Fecha en español, independiente del locale del servidor."""
+    return f"{dt.day:02d} de {MESES[dt.month-1]} de {dt.year} — {dt:%H:%M} hs (hora Paraguay)"
 
 # ── Scraping con Playwright ───────────────────────────────────────
 def scrape_playwright():
@@ -178,7 +185,7 @@ def parse(html):
                         "nivel": nivel, "var": var, "max": maxh,
                         "pct": round(nivel/maxh*100,1) if maxh and maxh > 0 else None
                     }
-            except:
+            except Exception:
                 continue
     return stations
 
@@ -365,7 +372,6 @@ def generate(st, alertas, nivel_alerta, ts, proj_coords=None, cha_coords=None, p
         cha_coords = read_cha()
     if parque_coords is None:
         parque_coords = read_parque()
-    import json
     proj_coords_js   = json.dumps(proj_coords)
     cha_coords_js    = json.dumps(cha_coords)
     parque_coords_js = json.dumps(parque_coords)
@@ -705,7 +711,7 @@ revealEls.forEach(function(el, i){{
 
 # ── Main ──────────────────────────────────────────────────────────
 def main():
-    ts = now_py().strftime("%d de %B de %Y — %H:%M hs (hora Paraguay)")
+    ts = fecha_es(now_py())
     print(f"[{ts}] Iniciando monitor hídrico...")
     st = get_stations()
     alertas, nivel_alerta = evaluar(st)
